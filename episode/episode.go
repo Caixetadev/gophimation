@@ -3,6 +3,7 @@ package episode
 import (
 	"fmt"
 
+	"github.com/Caixetadev/ani-go/config"
 	"github.com/Caixetadev/ani-go/search"
 	"github.com/gocolly/colly/v2"
 )
@@ -14,9 +15,7 @@ type EpisodeInfo struct {
 }
 
 func SelectEpisode() string {
-	c := colly.NewCollector(
-		colly.AllowedDomains("www.anitube.site", "rr1---sn-gx5auxaxjvhxpgxap-btoe.googlevideo.com", "www.blogger.com"),
-	)
+	c := config.Colly()
 
 	var episodes []EpisodeInfo
 	var option int

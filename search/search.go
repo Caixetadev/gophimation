@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/Caixetadev/ani-go/config"
 	"github.com/gocolly/colly/v2"
 )
 
@@ -14,9 +15,8 @@ type AnimeInfo struct {
 }
 
 func Search() string {
-	c := colly.NewCollector(
-		colly.AllowedDomains("www.anitube.site", "rr1---sn-gx5auxaxjvhxpgxap-btoe.googlevideo.com", "www.blogger.com"),
-	)
+	c := config.Colly()
+
 	fname := os.Args[1]
 	var option int
 	var animes []AnimeInfo
@@ -41,9 +41,10 @@ func Search() string {
 
 	fmt.Scanln(&option)
 
-	for i, ai := range animes {
-		if i == option {
-			animeSelected = ai.ID
+	for index, anime := range animes {
+		if index == option {
+			animeSelected = anime.ID
+			break
 		}
 	}
 
