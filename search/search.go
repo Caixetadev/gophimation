@@ -24,13 +24,15 @@ func Search() string {
 
 	URL := "https://www.anitube.site/?s=" + fname
 
+	fmt.Println()
+
 	c.OnHTML(".aniItem", func(e *colly.HTMLElement) {
 		href := e.ChildAttr("a", "href")
 		name := e.ChildText(".aniItemNome")
 
 		animes = append(animes, AnimeInfo{Name: name, ID: href, Index: e.Index})
 
-		fmt.Printf("[%d] - nome do anime: %v. ID do anime: %v\n", e.Index, name, href)
+		fmt.Printf("[%d] - %v.\n", e.Index, name)
 	})
 
 	c.Visit(URL)
