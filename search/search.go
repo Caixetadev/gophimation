@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/Caixetadev/ani-go/config"
+	"github.com/Caixetadev/ani-go/utils"
 	"github.com/gocolly/colly/v2"
 )
 
@@ -17,12 +18,15 @@ type AnimeInfo struct {
 func Search() string {
 	c := config.Colly()
 
-	fname := os.Args[1]
+	fname := os.Args
 	var option int
 	var animes []AnimeInfo
 	var animeSelected string
+	URL := "https://www.anitube.site/?s="
 
-	URL := "https://www.anitube.site/?s=" + fname
+	for i := 1; i < len(fname); i++ {
+		URL += fname[i] + "+"
+	}
 
 	fmt.Println()
 
@@ -32,7 +36,7 @@ func Search() string {
 
 		animes = append(animes, AnimeInfo{Name: name, ID: href, Index: e.Index})
 
-		fmt.Printf("[%d] - %v.\n", e.Index, name)
+		fmt.Printf("[%d] - %v.\n", e.Index+1, name)
 	})
 
 	c.Visit(URL)
@@ -42,11 +46,13 @@ func Search() string {
 	fmt.Scanln(&option)
 
 	for index, anime := range animes {
-		if index == option {
+		if (index + 1) == option {
 			animeSelected = anime.ID
 			break
 		}
 	}
+
+	utils.Clear()
 
 	return animeSelected
 }

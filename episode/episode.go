@@ -27,7 +27,7 @@ func SelectEpisode() string {
 
 		episodes = append(episodes, EpisodeInfo{Name: name, ID: href, Index: e.Index})
 
-		fmt.Printf("[%d] - nome do anime: %v. ID do anime: %v\n", e.Index, name, href)
+		fmt.Printf("[%d] -  %v\n", e.Index+1, name)
 	})
 
 	URL := search.Search()
@@ -39,7 +39,7 @@ func SelectEpisode() string {
 	fmt.Scanln(&option)
 
 	for i, ai := range episodes {
-		if i == option {
+		if (i + 1) == option {
 			episodeSelected = ai.ID
 		}
 	}
