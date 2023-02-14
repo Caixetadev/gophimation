@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/Caixetadev/ani-go/config"
-	"github.com/Caixetadev/ani-go/utils"
+	"github.com/Caixetadev/gophimation/config"
+	"github.com/Caixetadev/gophimation/utils"
 	"github.com/gocolly/colly/v2"
 )
 

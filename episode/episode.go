@@ -3,8 +3,8 @@ package episode
 import (
 	"fmt"
 
-	"github.com/Caixetadev/ani-go/config"
-	"github.com/Caixetadev/ani-go/search"
+	"github.com/Caixetadev/gophimation/config"
+	"github.com/Caixetadev/gophimation/search"
 	"github.com/gocolly/colly/v2"
 )
 

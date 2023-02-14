@@ -1,4 +1,4 @@
-module github.com/Caixetadev/ani-go
+module github.com/Caixetadev/gophimation
 
 go 1.20
 
