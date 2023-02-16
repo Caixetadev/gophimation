@@ -79,11 +79,7 @@ type VideoSource struct {
 }
 
 type ApiResponse struct {
-	Data     []VideoSource `json:"data"`
-	Response struct {
-		Status string `json:"status"`
-		Text   string `json:"text"`
-	} `json:"response"`
+	Data []VideoSource `json:"data"`
 }
 
 func main() {
@@ -116,6 +112,8 @@ func main() {
 		if err != nil {
 			log.Fatalln(err)
 		}
+
+		utils.Clear()
 
 		cmd := exec.Command("mpv", response.Data[len(response.Data)-1].Src, "--demuxer-max-bytes=1G", "--no-terminal", "--fs", "video")
 		cmd.Stdout = os.Stdout
