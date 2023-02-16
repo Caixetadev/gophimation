@@ -33,13 +33,13 @@ func Search() string {
 		return URL
 	}
 
-	URL := "https://www.anitube.site/?s="
+	URL := "https://animefire.net/pesquisar/"
 
 	for i := 1; i < len(fname); i++ {
-		URL += fname[i] + "+"
+		URL += fname[i] + "-"
 	}
 
-	c.OnHTML(".aniItem", func(e *colly.HTMLElement) {
+	c.OnHTML(".card", func(e *colly.HTMLElement) {
 		animes = utils.ScrapeAnimeInfo(e)
 	})
 

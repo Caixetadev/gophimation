@@ -15,11 +15,11 @@ func MostWatched() string {
 	var option int
 	var animeSelected string
 
-	c.OnHTML(".aniContainer .main-carousel .aniItem", func(h *colly.HTMLElement) {
+	c.OnHTML(".owl-carousel-semana .containerAnimes", func(h *colly.HTMLElement) {
 		animes = utils.ScrapeAnimeInfo(h)
 	})
 
-	c.Visit("https://www.anitube.site/")
+	c.Visit("https://animefire.net")
 
 	fmt.Println("\ncoloque um numero para assistir")
 

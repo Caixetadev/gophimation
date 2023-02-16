@@ -16,9 +16,9 @@ func SelectEpisode() string {
 	var option int
 	var episodeSelected string
 
-	c.OnHTML(".pagAniListaContainer a[href]", func(e *colly.HTMLElement) {
+	c.OnHTML(".div_video_list a[href]", func(e *colly.HTMLElement) {
 		href := e.Attr("href")
-		name := e.Attr("title")
+		name := e.Text
 
 		episodes = append(episodes, utils.AnimeInfo{Name: name, ID: href, Index: e.Index})
 

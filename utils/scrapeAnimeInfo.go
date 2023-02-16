@@ -16,7 +16,7 @@ var animes []AnimeInfo
 
 func ScrapeAnimeInfo(e *colly.HTMLElement) []AnimeInfo {
 	href := e.ChildAttr("a", "href")
-	name := e.ChildText(".aniItemNome")
+	name := e.ChildText(".text-block h3")
 
 	animes = append(animes, AnimeInfo{Name: name, ID: href, Index: e.Index})
 
