@@ -7,7 +7,7 @@ import (
 func Colly() *colly.Collector {
 	c := colly.NewCollector(
 		colly.CacheDir("./cache"),
-		colly.AllowedDomains("animefire.net"),
+		colly.AllowedDomains("animefire.net", "www.blogger.com", "rr1---sn-gx5auxaxjvhxpgxap-btoe.googlevideo.com"),
 	)
 
 	return c
