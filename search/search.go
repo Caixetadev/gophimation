@@ -2,9 +2,11 @@ package search
 
 import (
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/Caixetadev/gophimation/config"
+	mostwatched "github.com/Caixetadev/gophimation/mostWatched"
 	"github.com/Caixetadev/gophimation/utils"
 	"github.com/gocolly/colly/v2"
 )
@@ -20,30 +22,39 @@ func Search() string {
 
 	fname := os.Args
 	var option int
-	var animes []AnimeInfo
+	var animes []utils.AnimeInfo
 	var animeSelected string
+
+	var hasArgs = len(fname) == 1
+
+	if hasArgs {
+		URL := mostwatched.MostWatched()
+
+		return URL
+	}
+
 	URL := "https://www.anitube.site/?s="
 
 	for i := 1; i < len(fname); i++ {
 		URL += fname[i] + "+"
 	}
 
-	fmt.Println()
-
 	c.OnHTML(".aniItem", func(e *colly.HTMLElement) {
-		href := e.ChildAttr("a", "href")
-		name := e.ChildText(".aniItemNome")
-
-		animes = append(animes, AnimeInfo{Name: name, ID: href, Index: e.Index})
-
-		fmt.Printf("[%d] - %v.\n", e.Index+1, name)
+		animes = utils.ScrapeAnimeInfo(e)
 	})
 
 	c.Visit(URL)
 
+	if len(animes) == 0 {
+		utils.Clear()
+		log.Fatal("Não foi possivel achar o anime")
+	}
+
 	fmt.Println("\ncoloque um numero para assistir")
 
 	fmt.Scanln(&option)
+
+	utils.OptionIsValid(animes, option)
 
 	for index, anime := range animes {
 		if (index + 1) == option {
