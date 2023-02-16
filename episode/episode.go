@@ -5,19 +5,14 @@ import (
 
 	"github.com/Caixetadev/gophimation/config"
 	"github.com/Caixetadev/gophimation/search"
+	"github.com/Caixetadev/gophimation/utils"
 	"github.com/gocolly/colly/v2"
 )
-
-type EpisodeInfo struct {
-	Index int
-	Name  string
-	ID    string
-}
 
 func SelectEpisode() string {
 	c := config.Colly()
 
-	var episodes []EpisodeInfo
+	var episodes []utils.AnimeInfo
 	var option int
 	var episodeSelected string
 
@@ -25,7 +20,7 @@ func SelectEpisode() string {
 		href := e.Attr("href")
 		name := e.Attr("title")
 
-		episodes = append(episodes, EpisodeInfo{Name: name, ID: href, Index: e.Index})
+		episodes = append(episodes, utils.AnimeInfo{Name: name, ID: href, Index: e.Index})
 
 		fmt.Printf("[%d] -  %v\n", e.Index+1, name)
 	})
@@ -37,6 +32,8 @@ func SelectEpisode() string {
 	fmt.Println("\ncoloque um numero para assistir")
 
 	fmt.Scanln(&option)
+
+	utils.OptionIsValid(episodes, option)
 
 	for i, ai := range episodes {
 		if (i + 1) == option {
