@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"regexp"
+	"strings"
 
 	"github.com/Caixetadev/gophimation/config"
 	"github.com/Caixetadev/gophimation/episode"
@@ -91,6 +93,8 @@ func main() {
 
 	c.UserAgent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"
 
+	var triggerHTML bool
+
 	c.OnHTML("#my-video", func(e *colly.HTMLElement) {
 		URL := e.Attr("data-video-src")
 
@@ -116,6 +120,31 @@ func main() {
 		cmd := exec.Command("mpv", response.Data[len(response.Data)-1].Src, "--demuxer-max-bytes=1G", "--no-terminal", "--fs", "video")
 		cmd.Stdout = os.Stdout
 		cmd.Run()
+	})
+
+	c.OnHTML("#div_video iframe", func(h *colly.HTMLElement) {
+		URL := h.Attr("src")
+
+		triggerHTML = true
+		c.Visit(URL)
+	})
+
+	c.OnResponse(func(r *colly.Response) {
+		if triggerHTML {
+			c.OnHTML("html", func(e *colly.HTMLElement) {
+				res := regexp.MustCompile(`"https://rr[\S]+?"`)
+				fmt.Println(res)
+				url := res.FindAllStringSubmatch(e.Text, -1)
+
+				urlstring := strings.Join(res.FindAllStringSubmatch(e.Text, -1)[len(url)-1], "")
+
+				utils.Clear()
+
+				cmd := exec.Command("mpv", strings.Replace(urlstring, `"`, "", -1), "--demuxer-max-bytes=1G", "--no-terminal", "--fs", "video")
+				cmd.Stdout = os.Stdout
+				cmd.Run()
+			})
+		}
 	})
 
 	c.Visit(ep)
