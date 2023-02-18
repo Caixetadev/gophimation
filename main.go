@@ -10,54 +10,23 @@ import (
 	"strings"
 
 	"github.com/Caixetadev/gophimation/config"
+	"github.com/Caixetadev/gophimation/constants"
 	"github.com/Caixetadev/gophimation/episode"
 	"github.com/Caixetadev/gophimation/utils"
 	"github.com/gocolly/colly/v2"
 )
 
-const FILE_NAME = "dataUser.json"
-
-type UserConfig struct {
-	Name string `json:"name"`
-}
-
 func init() {
-	var name string
-
 	utils.Clear()
 
-	_, error := os.Stat(FILE_NAME)
+	_, error := os.Stat(constants.FILE_NAME)
 
 	if os.IsNotExist(error) {
-		fmt.Println("Qual o seu nome?")
-
-		fmt.Scanln(&name)
-
-		file, err := os.Create(FILE_NAME)
-
-		data := UserConfig{
-			Name: name,
-		}
-
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		defer file.Close()
-
-		user, _ := json.Marshal(data)
-
-		_ = os.WriteFile(FILE_NAME, user, 0644)
-
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		utils.Clear()
+		utils.CreateFile()
 	} else {
-		data, err := os.ReadFile(FILE_NAME)
+		data, err := os.ReadFile(constants.FILE_NAME)
 
-		var user UserConfig
+		var user utils.UserConfig
 
 		if errUnmarshal := json.Unmarshal(data, &user); errUnmarshal != nil {
 			log.Fatalln(errUnmarshal)
