@@ -5,22 +5,20 @@ import (
 	"fmt"
 	"log"
 	"os"
-
-	"github.com/Caixetadev/gophimation/constants"
 )
 
 type UserConfig struct {
 	Name string `json:"name"`
 }
 
-func CreateFile() {
+func CreateFile(fileName string) {
 	var name string
 
 	fmt.Println("Qual o seu nome?")
 
 	fmt.Scanln(&name)
 
-	file, err := os.Create(constants.FILE_NAME)
+	file, err := os.Create(fileName)
 
 	data := UserConfig{
 		Name: name,
@@ -34,7 +32,7 @@ func CreateFile() {
 
 	user, _ := json.Marshal(data)
 
-	_ = os.WriteFile(constants.FILE_NAME, user, 0644)
+	_ = os.WriteFile(fileName, user, 0644)
 
 	if err != nil {
 		log.Fatal(err)
