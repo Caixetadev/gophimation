@@ -2,6 +2,7 @@ package mostwatched
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/Caixetadev/gophimation/config"
 	"github.com/Caixetadev/gophimation/utils"
@@ -19,7 +20,9 @@ func MostWatched() string {
 		animes = utils.ScrapeAnimeInfo(h)
 	})
 
-	c.Visit("https://animefire.net")
+	if err := c.Visit("https://animefire.net"); err != nil {
+		log.Fatalln(err)
+	}
 
 	fmt.Println("\ncoloque um numero para assistir")
 
