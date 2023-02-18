@@ -43,7 +43,9 @@ func Search() string {
 		animes = utils.ScrapeAnimeInfo(e)
 	})
 
-	c.Visit(URL)
+	if err := c.Visit(URL); err != nil {
+		log.Fatalln(err)
+	}
 
 	if len(animes) == 0 {
 		utils.Clear()
