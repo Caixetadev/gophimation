@@ -5,9 +5,7 @@ import (
 	"fmt"
 	"io"
 	"log"
-	"net/http"
 	"os"
-	"os/exec"
 	"regexp"
 	"strings"
 
@@ -61,7 +59,9 @@ func init() {
 
 		var user UserConfig
 
-		json.Unmarshal(data, &user)
+		if errUnmarshal := json.Unmarshal(data, &user); errUnmarshal != nil {
+			log.Fatalln(errUnmarshal)
+		}
 
 		utils.Greeting(user.Name)
 
@@ -87,14 +87,14 @@ func main() {
 
 	ep := episode.SelectEpisode()
 
-	c.UserAgent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"
+	client := config.Http()
 
 	var triggerHTML bool
 
 	c.OnHTML("#my-video", func(e *colly.HTMLElement) {
 		URL := e.Attr("data-video-src")
 
-		res, err := http.Get(URL)
+		res, err := client.Get(URL)
 
 		if err != nil {
 			log.Fatal("error")
@@ -115,35 +115,35 @@ func main() {
 
 		utils.Clear()
 
-		cmd := exec.Command("mpv", response.Data[len(response.Data)-1].Src, "--demuxer-max-bytes=1G", "--no-terminal", "--fs", "video")
-		cmd.Stdout = os.Stdout
-		cmd.Run()
+		utils.PlayVideo(response.Data[len(response.Data)-1].Src)
 	})
 
 	c.OnHTML("#div_video iframe", func(h *colly.HTMLElement) {
 		URL := h.Attr("src")
 
 		triggerHTML = true
-		c.Visit(URL)
+
+		if err := c.Visit(URL); err != nil {
+			log.Fatalln(err)
+		}
 	})
 
 	c.OnResponse(func(r *colly.Response) {
 		if triggerHTML {
 			c.OnHTML("html", func(e *colly.HTMLElement) {
 				res := regexp.MustCompile(`"https://rr[\S]+?"`)
-				fmt.Println(res)
 				url := res.FindAllStringSubmatch(e.Text, -1)
 
 				urlstring := strings.Join(res.FindAllStringSubmatch(e.Text, -1)[len(url)-1], "")
 
 				utils.Clear()
 
-				cmd := exec.Command("mpv", strings.Replace(urlstring, `"`, "", -1), "--demuxer-max-bytes=1G", "--no-terminal", "--fs", "video")
-				cmd.Stdout = os.Stdout
-				cmd.Run()
+				utils.PlayVideo(strings.Replace(urlstring, `"`, "", -1))
 			})
 		}
 	})
 
-	c.Visit(ep)
+	if err := c.Visit(ep); err != nil {
+		log.Fatalln(err)
+	}
 }
