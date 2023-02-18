@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 	"log"
 	"os"
@@ -22,23 +21,9 @@ func init() {
 	_, error := os.Stat(constants.FILE_NAME)
 
 	if os.IsNotExist(error) {
-		utils.CreateFile()
+		utils.CreateFile(constants.FILE_NAME)
 	} else {
-		data, err := os.ReadFile(constants.FILE_NAME)
-
-		var user utils.UserConfig
-
-		if errUnmarshal := json.Unmarshal(data, &user); errUnmarshal != nil {
-			log.Fatalln(errUnmarshal)
-		}
-
-		utils.Greeting(user.Name)
-
-		fmt.Println()
-
-		if err != nil {
-			log.Panicf("failed reading data from file: %s", err)
-		}
+		utils.ReadFile(constants.FILE_NAME)
 	}
 }
 
