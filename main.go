@@ -11,11 +11,13 @@ import (
 	"github.com/Caixetadev/gophimation/config"
 	"github.com/Caixetadev/gophimation/constants"
 	"github.com/Caixetadev/gophimation/episode"
+	"github.com/Caixetadev/gophimation/presence"
 	"github.com/Caixetadev/gophimation/utils"
 	"github.com/gocolly/colly/v2"
 )
 
 func init() {
+	presence.Presence("Caixeta", "https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png", "Explorando Animes", "Encontre seu próximo anime favorito <3", "")
 	utils.Clear()
 
 	_, error := os.Stat(constants.FILE_NAME)

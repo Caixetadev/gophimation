@@ -54,9 +54,9 @@ func SelectEpisode() string {
 		}
 	}
 
-	watching := fmt.Sprintf("Episode %s", nameAnime)
+	watching := fmt.Sprintf("Episode %d", option)
 
-	presence.Presence(nameEpisode, imageAnime, nameAnime, watching)
+	presence.Presence(nameEpisode, imageAnime, nameAnime, watching, "https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png")
 
 	return episodeSelected
 }
