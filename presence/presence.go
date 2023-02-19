@@ -8,7 +8,7 @@ import (
 	"github.com/hugolgst/rich-go/client"
 )
 
-func Presence(name, imageLarge, nameAnime, state string) {
+func Presence(name, imageLarge, nameAnime, state, smallImage string) {
 	err := client.Login("1075841986923352079")
 
 	if err != nil {
@@ -22,10 +22,16 @@ func Presence(name, imageLarge, nameAnime, state string) {
 		Details:    nameAnime,
 		LargeImage: imageLarge,
 		LargeText:  nameAnime,
-		SmallImage: "https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png",
+		SmallImage: smallImage,
 		SmallText:  "Gophimation",
 		Timestamps: &client.Timestamps{
 			Start: &now,
+		},
+		Buttons: []*client.Button{
+			{
+				Label: "GitHub",
+				Url:   "https://github.com/caixetadev",
+			},
 		},
 	})
 
