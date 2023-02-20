@@ -8,24 +8,30 @@ import (
 	"github.com/hugolgst/rich-go/client"
 )
 
-func Presence(name, imageLarge, nameAnime, state string) {
+func Presence(name, imageLarge, nameAnime, state, smallImage string) {
 	err := client.Login("1075841986923352079")
 
 	if err != nil {
-		err := errors.New("nao foi possivel ativar a conexao com o discord")
+		err := errors.New("Aviso: Não foi possivel ativar a conexao com o discord\n")
 		fmt.Println(err)
 	}
 
 	now := time.Now()
 	err = client.SetActivity(client.Activity{
 		State:      state,
-		Details:    nameAnime,
+		Details:    "Assistindo " + nameAnime,
 		LargeImage: imageLarge,
 		LargeText:  nameAnime,
-		SmallImage: "https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png",
+		SmallImage: smallImage,
 		SmallText:  "Gophimation",
 		Timestamps: &client.Timestamps{
 			Start: &now,
+		},
+		Buttons: []*client.Button{
+			{
+				Label: "GitHub",
+				Url:   "https://github.com/caixetadev",
+			},
 		},
 	})
 
