@@ -6,12 +6,11 @@ import (
 
 	"github.com/Caixetadev/gophimation/config"
 	"github.com/Caixetadev/gophimation/presence"
-	"github.com/Caixetadev/gophimation/search"
 	"github.com/Caixetadev/gophimation/utils"
 	"github.com/gocolly/colly/v2"
 )
 
-func SelectEpisode() string {
+func SelectEpisode(URL string) string {
 	c := config.Colly()
 
 	var episodes []utils.AnimeInfo
@@ -35,8 +34,6 @@ func SelectEpisode() string {
 		nameAnime = h.ChildText(".div_anime_names h1")
 	})
 
-	URL := search.Search()
-
 	if err := c.Visit(URL); err != nil {
 		log.Fatalln(err)
 	}
@@ -54,9 +51,15 @@ func SelectEpisode() string {
 		}
 	}
 
-	watching := fmt.Sprintf("Episode %s", nameAnime)
+	var watching string
 
-	presence.Presence(nameEpisode, imageAnime, nameAnime, watching)
+	if option < 10 {
+		watching = fmt.Sprintf("Episódio %02d", option)
+	} else {
+		watching = fmt.Sprintf("Episódio %d", option)
+	}
+
+	presence.Presence(nameEpisode, imageAnime, nameAnime, watching, "https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png")
 
 	return episodeSelected
 }
