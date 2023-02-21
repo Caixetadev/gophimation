@@ -10,7 +10,7 @@ import (
 	"github.com/gocolly/colly/v2"
 )
 
-func SelectEpisode(URL string) string {
+func SelectEpisode(URL string) (string, string, string, string, string, string) {
 	c := config.Colly()
 
 	var episodes []utils.AnimeInfo
@@ -59,7 +59,7 @@ func SelectEpisode(URL string) string {
 		watching = fmt.Sprintf("Episódio %d", option)
 	}
 
-	presence.Presence(nameEpisode, imageAnime, nameAnime, watching, "https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png")
+	presence.Presence(nameEpisode, imageAnime, "Assistindo "+nameAnime, watching, "https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png")
 
-	return episodeSelected
+	return episodeSelected, nameEpisode, imageAnime, "Assistindo " + nameAnime, watching, "https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png"
 }
