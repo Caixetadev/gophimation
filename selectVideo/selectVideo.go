@@ -21,7 +21,7 @@ type ApiResponse struct {
 	Data []VideoSource `json:"data"`
 }
 
-func SelectVideo(ep string) {
+func SelectVideo(ep, nameAnime string) {
 	c := config.Colly()
 
 	client := config.Http()
@@ -50,7 +50,7 @@ func SelectVideo(ep string) {
 			log.Fatalln(err)
 		}
 
-		utils.PlayVideo(response.Data[len(response.Data)-1].Src)
+		utils.PlayVideo(response.Data[len(response.Data)-1].Src, nameAnime)
 	})
 
 	c.OnHTML("#div_video iframe", func(h *colly.HTMLElement) {
@@ -73,7 +73,7 @@ func SelectVideo(ep string) {
 
 				utils.Clear()
 
-				utils.PlayVideo(strings.Replace(urlstring, `"`, "", -1))
+				utils.PlayVideo(strings.Replace(urlstring, `"`, "", -1), nameAnime)
 			})
 		}
 	})
