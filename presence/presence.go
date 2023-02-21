@@ -19,7 +19,7 @@ func Presence(name, imageLarge, nameAnime, state, smallImage string) {
 	now := time.Now()
 	err = client.SetActivity(client.Activity{
 		State:      state,
-		Details:    "Assistindo " + nameAnime,
+		Details:    nameAnime,
 		LargeImage: imageLarge,
 		LargeText:  nameAnime,
 		SmallImage: smallImage,
