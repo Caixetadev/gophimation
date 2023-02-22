@@ -50,6 +50,8 @@ func SelectVideo(ep, nameAnime string) {
 			log.Fatalln(err)
 		}
 
+		utils.Clear()
+
 		utils.PlayVideo(response.Data[len(response.Data)-1].Src, nameAnime)
 	})
 
