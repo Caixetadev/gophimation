@@ -54,20 +54,14 @@ func watchEpisode(previousSearch string) {
 
 	var resp string
 
-	var watching string
-
 	regex := regexp.MustCompile(`animes\/(.*?)\/(\d+)`)
 	matches := regex.FindStringSubmatch(epsisae)
 	animeName := matches[1]
 	currentEpisode, _ = strconv.Atoi(matches[2])
 
-	if currentEpisode < 10 {
-		watching = fmt.Sprintf("Episódio %02d", currentEpisode)
-	} else {
-		watching = fmt.Sprintf("Episódio %d", currentEpisode)
-	}
+	episode := utils.FormatEpisode(currentEpisode)
 
-	selectVideo.SelectVideo(epsisae, nameAnime+" - "+watching)
+	selectVideo.SelectVideo(epsisae, nameAnime+" - "+episode)
 
 	for {
 		utils.Clear()
@@ -80,10 +74,10 @@ func watchEpisode(previousSearch string) {
 		case "n":
 			nextEpisode := currentEpisode + 1
 			nextEpisodeURL := fmt.Sprintf("https://animefire.net/animes/%s/%d", animeName, nextEpisode)
-			presence.Presence(nameEpisode, imageAnime, "Assistindo "+nameAnime, watching, "https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png")
-			selectVideo.SelectVideo(nextEpisodeURL, nameAnime+" - "+watching)
+			episode := utils.FormatEpisode(nextEpisode)
+			presence.Presence(nameEpisode, imageAnime, "Assistindo "+nameAnime, episode, "https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png")
+			selectVideo.SelectVideo(nextEpisodeURL, nameAnime+" - "+episode)
 			currentEpisode = nextEpisode
-
 		case "q":
 			return
 		default:
