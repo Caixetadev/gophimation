@@ -29,8 +29,8 @@ func Presence(name, imageLarge, nameAnime, state, smallImage string) {
 		},
 		Buttons: []*client.Button{
 			{
-				Label: "GitHub",
-				Url:   "https://github.com/caixetadev",
+				Label: "Website",
+				Url:   "https://gophimation.vercel.app/",
 			},
 		},
 	})
