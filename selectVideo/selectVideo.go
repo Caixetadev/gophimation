@@ -21,6 +21,7 @@ type ApiResponse struct {
 	Data []VideoSource `json:"data"`
 }
 
+// SelectVideo does the search for the url of the video
 func SelectVideo(ep, nameAnime string) {
 	c := config.Colly()
 
