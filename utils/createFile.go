@@ -7,10 +7,14 @@ import (
 	"os"
 )
 
+// UserConfig stores user configuration information, including their name.
 type UserConfig struct {
 	Name string `json:"name"`
 }
 
+// CreateFile prompts the user to enter their name, creates a new file
+// with the specified name, and writes the user's name to the file as
+// JSON data in a UserConfig struct format.
 func CreateFile(fileName string) {
 	var name string
 
