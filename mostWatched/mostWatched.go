@@ -9,6 +9,7 @@ import (
 	"github.com/gocolly/colly/v2"
 )
 
+// MostWatched prints the most viewed anime of the week and returns its url
 func MostWatched() string {
 	c := config.Colly()
 
