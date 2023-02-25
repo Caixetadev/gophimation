@@ -17,6 +17,7 @@ type AnimeInfo struct {
 	ID    string
 }
 
+// Search does the search for the anime
 func Search() string {
 	c := config.Colly()
 
