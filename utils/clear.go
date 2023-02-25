@@ -6,6 +6,7 @@ import (
 	"os/exec"
 )
 
+// Clear runs the command to clear the terminal
 func Clear() {
 	cmd := exec.Command("clear")
 	cmd.Stdout = os.Stdout
