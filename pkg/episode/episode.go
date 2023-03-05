@@ -35,6 +35,7 @@ func SelectEpisode(URL string) (string, string, string, string, string, string) 
 	})
 
 	if err := c.Visit(URL); err != nil {
+		util.UnCache(URL)
 		log.Fatalln(err)
 	}
 
