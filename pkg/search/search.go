@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/Caixetadev/gophimation/configs"
-	mostwatched "github.com/Caixetadev/gophimation/pkg/mostWatched"
+	mostWatched "github.com/Caixetadev/gophimation/pkg/mostWatched"
 	"github.com/Caixetadev/gophimation/pkg/util"
 	"github.com/gocolly/colly/v2"
 )
@@ -21,34 +21,34 @@ type AnimeInfo struct {
 func Search() string {
 	c := configs.Colly()
 
-	fname := os.Args
+	flags := os.Args
 	var option int
-	var animes []util.AnimeInfo
+	var anime []util.AnimeInfo
 	var animeSelected string
 
-	var hasArgs = len(fname) == 1
+	var hasArgs = len(flags) == 1
 
 	if hasArgs {
-		URL := mostwatched.MostWatched()
+		URL := mostWatched.MostWatched()
 
 		return URL
 	}
 
 	URL := "https://animefire.net/pesquisar/"
 
-	for i := 1; i < len(fname); i++ {
-		URL += fname[i] + "-"
+	for i := 1; i < len(flags); i++ {
+		URL += flags[i] + "-"
 	}
 
 	c.OnHTML(".card", func(e *colly.HTMLElement) {
-		animes = util.ScrapeAnimeInfo(e)
+		anime = util.ScrapeAnimeInfo(e)
 	})
 
 	if err := c.Visit(URL); err != nil {
 		log.Fatalln(err)
 	}
 
-	if len(animes) == 0 {
+	if len(anime) == 0 {
 		util.Clear()
 		log.Fatal("Não foi possivel achar o anime")
 	}
@@ -57,9 +57,9 @@ func Search() string {
 
 	fmt.Scanln(&option)
 
-	util.OptionIsValid(animes, option)
+	util.OptionIsValid(anime, option)
 
-	for index, anime := range animes {
+	for index, anime := range anime {
 		if (index + 1) == option {
 			animeSelected = anime.ID
 			break

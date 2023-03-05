@@ -13,12 +13,12 @@ import (
 func MostWatched() string {
 	c := configs.Colly()
 
-	var animes []util.AnimeInfo
+	var anime []util.AnimeInfo
 	var option int
 	var animeSelected string
 
 	c.OnHTML(".owl-carousel-semana .containerAnimes", func(h *colly.HTMLElement) {
-		animes = util.ScrapeAnimeInfo(h)
+		anime = util.ScrapeAnimeInfo(h)
 	})
 
 	if err := c.Visit("https://animefire.net"); err != nil {
@@ -29,9 +29,9 @@ func MostWatched() string {
 
 	fmt.Scanln(&option)
 
-	util.OptionIsValid(animes, option)
+	util.OptionIsValid(anime, option)
 
-	for index, anime := range animes {
+	for index, anime := range anime {
 		if (index + 1) == option {
 			animeSelected = anime.ID
 			break
