@@ -66,11 +66,9 @@ Para contribuir com <nome_do_projeto>, siga estas etapas:
 
 Como alternativa, consulte a documentação do GitHub em [como criar uma solicitação pull](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
 
-## 🤝 Colaboradores
+## 🤝 Contribuidores
 
 Agradecemos às seguintes pessoas que contribuíram para este projeto:
-
-## Contribuidores
 
 <a href="https://github.com/filipedeschamps/tabnews.com.br/graphs/contributors">
   <img src="https://contributors-img.web.app/image?repo=filipedeschamps/tabnews.com.br&max=500" alt="Lista de contribuidores" width="100%"/>
