@@ -5,9 +5,9 @@ import (
 	"log"
 	"os"
 
-	"github.com/Caixetadev/gophimation/config"
-	mostwatched "github.com/Caixetadev/gophimation/mostWatched"
-	"github.com/Caixetadev/gophimation/utils"
+	"github.com/Caixetadev/gophimation/configs"
+	mostwatched "github.com/Caixetadev/gophimation/pkg/mostWatched"
+	"github.com/Caixetadev/gophimation/pkg/util"
 	"github.com/gocolly/colly/v2"
 )
 
@@ -19,11 +19,11 @@ type AnimeInfo struct {
 
 // Search does the search for the anime
 func Search() string {
-	c := config.Colly()
+	c := configs.Colly()
 
 	fname := os.Args
 	var option int
-	var animes []utils.AnimeInfo
+	var animes []util.AnimeInfo
 	var animeSelected string
 
 	var hasArgs = len(fname) == 1
@@ -41,7 +41,7 @@ func Search() string {
 	}
 
 	c.OnHTML(".card", func(e *colly.HTMLElement) {
-		animes = utils.ScrapeAnimeInfo(e)
+		animes = util.ScrapeAnimeInfo(e)
 	})
 
 	if err := c.Visit(URL); err != nil {
@@ -49,7 +49,7 @@ func Search() string {
 	}
 
 	if len(animes) == 0 {
-		utils.Clear()
+		util.Clear()
 		log.Fatal("Não foi possivel achar o anime")
 	}
 
@@ -57,7 +57,7 @@ func Search() string {
 
 	fmt.Scanln(&option)
 
-	utils.OptionIsValid(animes, option)
+	util.OptionIsValid(animes, option)
 
 	for index, anime := range animes {
 		if (index + 1) == option {
@@ -66,7 +66,7 @@ func Search() string {
 		}
 	}
 
-	utils.Clear()
+	util.Clear()
 
 	return animeSelected
 }

@@ -7,8 +7,8 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/Caixetadev/gophimation/config"
-	"github.com/Caixetadev/gophimation/utils"
+	"github.com/Caixetadev/gophimation/configs"
+	"github.com/Caixetadev/gophimation/pkg/util"
 	"github.com/gocolly/colly/v2"
 )
 
@@ -23,9 +23,9 @@ type ApiResponse struct {
 
 // SelectVideo does the search for the url of the video
 func SelectVideo(ep, nameAnime string) {
-	c := config.Colly()
+	c := configs.Colly()
 
-	client := config.Http()
+	client := configs.Http()
 
 	var triggerHTML bool
 
@@ -51,9 +51,9 @@ func SelectVideo(ep, nameAnime string) {
 			log.Fatalln(err)
 		}
 
-		utils.Clear()
+		util.Clear()
 
-		utils.PlayVideo(response.Data[len(response.Data)-1].Src, nameAnime)
+		util.PlayVideo(response.Data[len(response.Data)-1].Src, nameAnime)
 	})
 
 	c.OnHTML("#div_video iframe", func(h *colly.HTMLElement) {
@@ -74,9 +74,9 @@ func SelectVideo(ep, nameAnime string) {
 
 				urlstring := strings.Join(res.FindAllStringSubmatch(e.Text, -1)[len(url)-1], "")
 
-				utils.Clear()
+				util.Clear()
 
-				utils.PlayVideo(strings.Replace(urlstring, `"`, "", -1), nameAnime)
+				util.PlayVideo(strings.Replace(urlstring, `"`, "", -1), nameAnime)
 			})
 		}
 	})

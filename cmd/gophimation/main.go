@@ -8,26 +8,26 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Caixetadev/gophimation/constants"
-	"github.com/Caixetadev/gophimation/episode"
-	mostwatched "github.com/Caixetadev/gophimation/mostWatched"
-	"github.com/Caixetadev/gophimation/presence"
-	"github.com/Caixetadev/gophimation/search"
-	"github.com/Caixetadev/gophimation/selectVideo"
-	"github.com/Caixetadev/gophimation/utils"
+	"github.com/Caixetadev/gophimation/pkg/constants"
+	"github.com/Caixetadev/gophimation/pkg/episode"
+	mostwatched "github.com/Caixetadev/gophimation/pkg/mostWatched"
+	"github.com/Caixetadev/gophimation/pkg/presence"
+	"github.com/Caixetadev/gophimation/pkg/search"
+	"github.com/Caixetadev/gophimation/pkg/selectVideo"
+	"github.com/Caixetadev/gophimation/pkg/util"
 )
 
 func init() {
 	presence.Presence("Caixeta", "https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png", "Explorando Animes", "Encontre seu próximo anime favorito <3", "")
 
-	utils.Clear()
+	util.Clear()
 
 	_, error := os.Stat(constants.FILE_NAME)
 
 	if os.IsNotExist(error) {
-		utils.CreateFile(constants.FILE_NAME)
+		util.CreateFile(constants.FILE_NAME)
 	} else {
-		utils.ReadFile(constants.FILE_NAME)
+		util.ReadFile(constants.FILE_NAME)
 	}
 }
 
@@ -59,12 +59,12 @@ func watchEpisode(previousSearch string) {
 	animeName := matches[1]
 	currentEpisode, _ = strconv.Atoi(matches[2])
 
-	episode := utils.FormatEpisode(currentEpisode)
+	episode := util.FormatEpisode(currentEpisode)
 
 	selectVideo.SelectVideo(epsisae, nameAnime+" - "+episode)
 
 	for {
-		utils.Clear()
+		util.Clear()
 
 		fmt.Println("(n) proximo")
 		fmt.Println("(q) sair")
@@ -74,7 +74,7 @@ func watchEpisode(previousSearch string) {
 		case "n":
 			nextEpisode := currentEpisode + 1
 			nextEpisodeURL := fmt.Sprintf("https://animefire.net/animes/%s/%d", animeName, nextEpisode)
-			episode := utils.FormatEpisode(nextEpisode)
+			episode := util.FormatEpisode(nextEpisode)
 			presence.Presence(nameEpisode, imageAnime, "Assistindo "+nameAnime, episode, "https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png")
 			selectVideo.SelectVideo(nextEpisodeURL, nameAnime+" - "+episode)
 			currentEpisode = nextEpisode

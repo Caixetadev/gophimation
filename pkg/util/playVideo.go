@@ -1,4 +1,4 @@
-package utils
+package util
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/Caixetadev/gophimation/presence"
+	"github.com/Caixetadev/gophimation/pkg/presence"
 )
 
 // PlayVideo runs a command that opens a video player to play a video from a specified URL
