@@ -4,16 +4,16 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/Caixetadev/gophimation/config"
-	"github.com/Caixetadev/gophimation/presence"
-	"github.com/Caixetadev/gophimation/utils"
+	"github.com/Caixetadev/gophimation/configs"
+	"github.com/Caixetadev/gophimation/pkg/presence"
+	"github.com/Caixetadev/gophimation/pkg/util"
 	"github.com/gocolly/colly/v2"
 )
 
 func SelectEpisode(URL string) (string, string, string, string, string, string) {
-	c := config.Colly()
+	c := configs.Colly()
 
-	var episodes []utils.AnimeInfo
+	var episodes []util.AnimeInfo
 	var option int
 	var episodeSelected string
 	var imageAnime string
@@ -24,7 +24,7 @@ func SelectEpisode(URL string) (string, string, string, string, string, string) 
 		href := e.Attr("href")
 		name := e.Text
 
-		episodes = append(episodes, utils.AnimeInfo{Name: name, ID: href, Index: e.Index})
+		episodes = append(episodes, util.AnimeInfo{Name: name, ID: href, Index: e.Index})
 
 		fmt.Printf("[%d] -  %v\n", e.Index+1, name)
 	})
@@ -42,7 +42,7 @@ func SelectEpisode(URL string) (string, string, string, string, string, string) 
 
 	fmt.Scanln(&option)
 
-	utils.OptionIsValid(episodes, option)
+	util.OptionIsValid(episodes, option)
 
 	for i, ai := range episodes {
 		if (i + 1) == option {
