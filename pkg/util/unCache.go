@@ -5,22 +5,13 @@ import (
 	"encoding/hex"
 	"log"
 	"os"
-	"os/user"
 	"path"
-	"path/filepath"
 )
 
 func UnCache(URL string) {
 	log.Println("Trying to remove cached response for:", URL)
 
-	// obter o diretório home do usuário
-	usr, err := user.Current()
-
-	if err != nil {
-		panic(err)
-	}
-
-	cacheDir := filepath.Join(usr.HomeDir, ".cache", "gophimation")
+	cacheDir := GetHomeDir()
 
 	sum := sha1.Sum([]byte(URL))
 	hash := hex.EncodeToString(sum[:])

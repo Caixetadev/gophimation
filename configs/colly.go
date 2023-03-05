@@ -1,21 +1,12 @@
 package configs
 
 import (
-	"os/user"
-	"path/filepath"
-
+	"github.com/Caixetadev/gophimation/pkg/util"
 	"github.com/gocolly/colly/v2"
 )
 
 func Colly() *colly.Collector {
-	// obter o diretório home do usuário
-	usr, err := user.Current()
-
-	if err != nil {
-		panic(err)
-	}
-
-	cacheDir := filepath.Join(usr.HomeDir, ".cache", "gophimation")
+	cacheDir := util.GetHomeDir()
 
 	c := colly.NewCollector(
 		colly.CacheDir(cacheDir),
