@@ -29,7 +29,7 @@ func SelectEpisode(URL string) string {
 	}
 
 	for i, item := range anime {
-		fmt.Printf("[%d] - %v\n", i+1, item.Name)
+		fmt.Printf("[%02d] - %v\n", i+1, item.Name)
 	}
 
 	fmt.Println("\ncoloque um numero para assistir")
@@ -38,7 +38,9 @@ func SelectEpisode(URL string) string {
 
 	util.OptionIsValid(anime, option)
 
-	fmt.Println()
+	util.Clear()
+
+	fmt.Println("Carregando...")
 
 	return anime[option-1].URL
 }
