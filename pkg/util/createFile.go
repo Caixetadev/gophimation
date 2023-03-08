@@ -34,9 +34,17 @@ func CreateFile(fileName string) {
 
 	defer file.Close()
 
-	user, _ := json.Marshal(data)
+	user, err := json.Marshal(data)
 
-	_ = os.WriteFile(fileName, user, 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = os.WriteFile(fileName, user, 0644)
+
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	if err != nil {
 		log.Fatal(err)
