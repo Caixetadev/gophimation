@@ -1,7 +1,6 @@
 package models
 
-type AnimeInfo struct {
-	Index int
-	Name  string `json:"name"`
-	ID    string `json:"url"`
+type Anime struct {
+	Name string `json:"name"`
+	URL  string `json:"url"`
 }

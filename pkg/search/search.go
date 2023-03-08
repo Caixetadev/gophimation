@@ -40,7 +40,7 @@ func Search() string {
 
 	defer resp.Body.Close()
 
-	var anime []models.AnimeInfo
+	var anime []models.Anime
 	err = json.NewDecoder(resp.Body).Decode(&anime)
 
 	if err != nil {
@@ -48,7 +48,7 @@ func Search() string {
 	}
 
 	for i, item := range anime {
-		fmt.Printf("[%d] - %v\n", i+1, item.Name)
+		fmt.Printf("[%02d] - %v\n", i+1, item.Name)
 	}
 
 	fmt.Println("\ncoloque um numero para assistir")
@@ -64,5 +64,5 @@ func Search() string {
 
 	fmt.Println()
 
-	return anime[option-1].ID
+	return anime[option-1].URL
 }

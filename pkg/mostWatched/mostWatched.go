@@ -22,7 +22,7 @@ func MostWatched() string {
 
 	defer resp.Body.Close()
 
-	var anime []models.AnimeInfo
+	var anime []models.Anime
 	err = json.NewDecoder(resp.Body).Decode(&anime)
 
 	if err != nil {
@@ -39,5 +39,5 @@ func MostWatched() string {
 
 	util.OptionIsValid(anime, option)
 
-	return anime[option-1].ID
+	return anime[option-1].URL
 }
