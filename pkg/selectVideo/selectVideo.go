@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/Caixetadev/gophimation/pkg/models"
 	"github.com/Caixetadev/gophimation/pkg/util"
 )
 
@@ -18,7 +19,7 @@ func SelectVideo(ep, nameAnime string) {
 
 	defer resp.Body.Close()
 
-	var anime []util.AnimeInfo
+	var anime []models.AnimeInfo
 	err = json.NewDecoder(resp.Body).Decode(&anime)
 
 	if err != nil {
