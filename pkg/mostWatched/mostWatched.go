@@ -1,28 +1,35 @@
 package mostwatched
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
+	"net/http"
 
-	"github.com/Caixetadev/gophimation/configs"
 	"github.com/Caixetadev/gophimation/pkg/util"
-	"github.com/gocolly/colly/v2"
 )
 
 // MostWatched prints the most viewed anime of the week and returns its url
 func MostWatched() string {
-	c := configs.Colly()
+	var option int
+
+	resp, err := http.Get("http://localhost:8000/most-watched")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer resp.Body.Close()
 
 	var anime []util.AnimeInfo
-	var option int
-	var animeSelected string
+	err = json.NewDecoder(resp.Body).Decode(&anime)
 
-	c.OnHTML(".owl-carousel-semana .containerAnimes", func(h *colly.HTMLElement) {
-		anime = util.ScrapeAnimeInfo(h)
-	})
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	if err := c.Visit("https://animefire.net"); err != nil {
-		log.Fatalln(err)
+	for i, item := range anime {
+		fmt.Printf("[%d] - %v\n", i+1, item.Name)
 	}
 
 	fmt.Println("\ncoloque um numero para assistir")
@@ -31,14 +38,5 @@ func MostWatched() string {
 
 	util.OptionIsValid(anime, option)
 
-	for index, anime := range anime {
-		if (index + 1) == option {
-			animeSelected = anime.ID
-			break
-		}
-	}
-
-	util.Clear()
-
-	return animeSelected
+	return anime[option-1].ID
 }
