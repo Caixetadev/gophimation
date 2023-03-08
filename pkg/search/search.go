@@ -1,72 +1,68 @@
 package search
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 
-	"github.com/Caixetadev/gophimation/configs"
-	mostwatched "github.com/Caixetadev/gophimation/pkg/mostWatched"
+	"github.com/Caixetadev/gophimation/pkg/models"
+	mostWatched "github.com/Caixetadev/gophimation/pkg/mostWatched"
 	"github.com/Caixetadev/gophimation/pkg/util"
-	"github.com/gocolly/colly/v2"
 )
-
-type AnimeInfo struct {
-	Index int
-	Name  string
-	ID    string
-}
 
 // Search does the search for the anime
 func Search() string {
-	c := configs.Colly()
+	flags := os.Args
 
-	fname := os.Args
-	var option int
-	var animes []util.AnimeInfo
-	var animeSelected string
-
-	var hasArgs = len(fname) == 1
+	var hasArgs = len(flags) == 1
 
 	if hasArgs {
-		URL := mostwatched.MostWatched()
+		URL := mostWatched.MostWatched()
 
 		return URL
 	}
 
-	URL := "https://animefire.net/pesquisar/"
+	URL := "http://localhost:8000/search/"
 
-	for i := 1; i < len(fname); i++ {
-		URL += fname[i] + "-"
+	for i := 1; i < len(flags); i++ {
+		URL += flags[i] + "-"
 	}
 
-	c.OnHTML(".card", func(e *colly.HTMLElement) {
-		animes = util.ScrapeAnimeInfo(e)
-	})
+	var option int
 
-	if err := c.Visit(URL); err != nil {
-		log.Fatalln(err)
+	resp, err := http.Get(URL)
+
+	if err != nil {
+		log.Fatal(err)
 	}
 
-	if len(animes) == 0 {
-		util.Clear()
-		log.Fatal("Não foi possivel achar o anime")
+	defer resp.Body.Close()
+
+	var anime []models.AnimeInfo
+	err = json.NewDecoder(resp.Body).Decode(&anime)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for i, item := range anime {
+		fmt.Printf("[%d] - %v\n", i+1, item.Name)
 	}
 
 	fmt.Println("\ncoloque um numero para assistir")
 
-	fmt.Scanln(&option)
-
-	util.OptionIsValid(animes, option)
-
-	for index, anime := range animes {
-		if (index + 1) == option {
-			animeSelected = anime.ID
-			break
-		}
+	if len(anime) == 0 {
+		util.Clear()
+		log.Fatal("Não foi possivel achar o anime")
 	}
 
-	util.Clear()
+	fmt.Scanln(&option)
 
-	return animeSelected
+	util.OptionIsValid(anime, option)
+
+	fmt.Println()
+
+	return anime[option-1].ID
 }
