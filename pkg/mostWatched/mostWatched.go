@@ -30,7 +30,7 @@ func MostWatched() string {
 	}
 
 	for i, item := range anime {
-		fmt.Printf("[%d] - %v\n", i+1, item.Name)
+		fmt.Printf("[%02d] - %v\n", i+1, item.Name)
 	}
 
 	fmt.Println("\ncoloque um numero para assistir")
