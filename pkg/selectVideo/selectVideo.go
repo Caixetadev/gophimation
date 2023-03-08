@@ -19,12 +19,12 @@ func SelectVideo(ep, nameAnime string) {
 
 	defer resp.Body.Close()
 
-	var anime []models.AnimeInfo
+	var anime []models.Anime
 	err = json.NewDecoder(resp.Body).Decode(&anime)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	util.PlayVideo(anime[0].ID, anime[0].Name)
+	util.PlayVideo(anime[0].URL, anime[0].Name)
 }
