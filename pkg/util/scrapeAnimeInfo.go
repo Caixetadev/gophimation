@@ -9,8 +9,8 @@ import (
 // AnimeInfo is a struct that stores information about an anime, such as its index, name and ID.
 type AnimeInfo struct {
 	Index int
-	Name  string
-	ID    string
+	Name  string `json:"name"`
+	ID    string `json:"url"`
 }
 
 // Slice da struct AnimeInfo
