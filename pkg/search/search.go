@@ -1,30 +1,19 @@
 package search
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 
-	"github.com/Caixetadev/gophimation/configs"
 	mostWatched "github.com/Caixetadev/gophimation/pkg/mostWatched"
 	"github.com/Caixetadev/gophimation/pkg/util"
-	"github.com/gocolly/colly/v2"
 )
-
-type AnimeInfo struct {
-	Index int
-	Name  string
-	ID    string
-}
 
 // Search does the search for the anime
 func Search() string {
-	c := configs.Colly()
-
 	flags := os.Args
-	var option int
-	var anime []util.AnimeInfo
-	var animeSelected string
 
 	var hasArgs = len(flags) == 1
 
@@ -34,39 +23,45 @@ func Search() string {
 		return URL
 	}
 
-	URL := "https://animefire.net/pesquisar/"
+	URL := "http://localhost:8000/search/"
 
 	for i := 1; i < len(flags); i++ {
 		URL += flags[i] + "-"
 	}
 
-	c.OnHTML(".card", func(e *colly.HTMLElement) {
-		anime = util.ScrapeAnimeInfo(e)
-	})
+	var option int
 
-	if err := c.Visit(URL); err != nil {
-		log.Fatalln(err)
+	resp, err := http.Get(URL)
+
+	if err != nil {
+		log.Fatal(err)
 	}
+
+	defer resp.Body.Close()
+
+	var anime []util.AnimeInfo
+	err = json.NewDecoder(resp.Body).Decode(&anime)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for i, item := range anime {
+		fmt.Printf("[%d] - %v\n", i+1, item.Name)
+	}
+
+	fmt.Println("\ncoloque um numero para assistir")
 
 	if len(anime) == 0 {
 		util.Clear()
 		log.Fatal("Não foi possivel achar o anime")
 	}
 
-	fmt.Println("\ncoloque um numero para assistir")
-
 	fmt.Scanln(&option)
 
 	util.OptionIsValid(anime, option)
 
-	for index, anime := range anime {
-		if (index + 1) == option {
-			animeSelected = anime.ID
-			break
-		}
-	}
+	fmt.Println()
 
-	util.Clear()
-
-	return animeSelected
+	return anime[option-1].ID
 }
