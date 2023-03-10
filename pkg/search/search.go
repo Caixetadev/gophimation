@@ -15,43 +15,33 @@ import (
 
 // Search does the search for the anime
 func Search() string {
-	searchTerm := os.Args
 	c := configs.Colly()
 
-	var URL string
+	searchTerm := strings.Join(os.Args[1:], "+")
 
-	for i := 1; i < len(searchTerm); i++ {
-		URL += fmt.Sprintf("%spesquisa?titulo=%s&searchTerm=%s", constants.URL_BASE, searchTerm[i]+"+", searchTerm[i]+"+")
-	}
+	URL := fmt.Sprintf("%spesquisa?titulo=%s&searchTerm=%s", constants.URL_BASE, searchTerm, searchTerm)
 
 	var selectedOption int
 
 	var anime []models.Anime
 
 	c.OnHTML(".list-animes article", func(h *colly.HTMLElement) {
-		episode := h.ChildAttr("a", "title")
-		urlAnime := h.ChildAttr("a", "href")
+		fmt.Printf("[%02d] - %s\n", h.Index+1, h.ChildAttr("a", "title"))
 
-		anime = append(anime, models.Anime{Name: episode, URL: strings.TrimPrefix(urlAnime, constants.URL_BASE)})
+		anime = append(anime, models.Anime{URL: strings.TrimPrefix(h.ChildAttr("a", "href"), constants.URL_BASE)})
 	})
 
 	c.Visit(URL)
-
-	for i, item := range anime {
-		fmt.Printf("[%02d] - %v\n", i+1, item.Name)
-	}
-
-	fmt.Println("\ncoloque um numero para assistir")
 
 	if len(anime) == 0 {
 		log.Fatal("Não foi possivel achar o anime")
 	}
 
+	fmt.Println("\ncoloque um numero para assistir")
+
 	fmt.Scanln(&selectedOption)
 
 	util.OptionIsValid(anime, selectedOption)
-
-	fmt.Println()
 
 	util.Clear()
 
