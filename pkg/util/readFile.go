@@ -19,6 +19,8 @@ func ReadFile(fileName string) {
 		log.Fatalln(errUnmarshal)
 	}
 
+	Clear()
+
 	Greeting(user.Name)
 
 	fmt.Println()

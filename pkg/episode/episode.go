@@ -16,69 +16,43 @@ func SelectEpisode(URL string) string {
 	var selectedOption int
 	var episodes []models.Anime
 
-	var nameAnime2 string
+	var nameAnime string
 
-	var image2 string
+	var image string
 
 	c := configs.Colly()
 
-	c.OnHTML("#episodesList .list-group-item-action", func(h *colly.HTMLElement) {
-		episode := h.ChildText("a h3")
-		urlAnime := h.ChildAttr("a", "href")
+	c.OnHTML(".infos_left .anime-info", func(h *colly.HTMLElement) {
+		nameAnime = h.ChildText("h2")
 
-		episodes = append(episodes, models.Anime{Name: episode, URL: strings.TrimPrefix(urlAnime, constants.URL_BASE)})
+		if URL == "random" {
+			fmt.Printf("O anime random é: %s\n\n", nameAnime)
+		}
+	})
+
+	c.OnHTML("#episodesList .list-group-item-action", func(h *colly.HTMLElement) {
+		fmt.Printf("[%02d] - %v\n", h.Index+1, h.ChildText("a h3"))
+
+		episodes = append(episodes, models.Anime{Name: h.ChildText("a h3"), URL: strings.TrimPrefix(h.ChildAttr("a", "href"), constants.URL_BASE)})
 	})
 
 	c.OnHTML("main.container", func(h *colly.HTMLElement) {
-		image := h.ChildAttr(".infos-img img", "src")
-
-		image2 = image
-	})
-
-	c.OnHTML(".infos_left .anime-info", func(h *colly.HTMLElement) {
-		nameAnime := h.ChildText("h2")
-
-		nameAnime2 = nameAnime
+		image = h.ChildAttr(".infos-img img", "src")
 	})
 
 	c.Visit(constants.URL_BASE + URL)
-
-	animeResponse := models.AnimeResponse{
-		Anime:    models.Anime{Name: nameAnime2, URL: image2},
-		Episodes: episodes,
-	}
-
-	util.Clear()
-
-	if URL == "random" {
-		fmt.Printf("O anime random é %s\n", animeResponse.Anime.Name)
-	}
-
-	fmt.Println()
-
-	for i, item := range animeResponse.Episodes {
-		fmt.Printf("[%02d] - %v\n", i+1, item.Name)
-	}
 
 	fmt.Println("\ncoloque um numero para assistir")
 
 	fmt.Scanln(&selectedOption)
 
-	util.OptionIsValid(animeResponse.Episodes, selectedOption)
-
-	var watching string
-
-	if selectedOption < 10 {
-		watching = fmt.Sprintf("Episódio %02d", selectedOption)
-	} else {
-		watching = fmt.Sprintf("Episódio %d", selectedOption)
-	}
+	util.OptionIsValid(episodes, selectedOption)
 
 	util.Clear()
 
 	fmt.Println("Carregando...")
 
-	presence.Presence("Caixeta", "https:"+animeResponse.Anime.URL, animeResponse.Anime.Name, watching, "https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png")
+	presence.Presence("Caixeta", "https:"+image, nameAnime, fmt.Sprintf("Episódio %02d", selectedOption), "https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png")
 
-	return animeResponse.Episodes[selectedOption-1].URL
+	return episodes[selectedOption-1].URL
 }
