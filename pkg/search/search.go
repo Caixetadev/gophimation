@@ -8,7 +8,6 @@ import (
 
 	"github.com/Caixetadev/gophimation/pkg/configs"
 	"github.com/Caixetadev/gophimation/pkg/models"
-	mostWatched "github.com/Caixetadev/gophimation/pkg/mostWatched"
 	"github.com/Caixetadev/gophimation/pkg/util"
 	"github.com/gocolly/colly"
 )
@@ -17,14 +16,6 @@ import (
 func Search() string {
 	flags := os.Args
 	c := configs.Colly()
-
-	var hasArgs = len(flags) == 1
-
-	if hasArgs {
-		URL := mostWatched.MostWatched()
-
-		return URL
-	}
 
 	var URL string
 
