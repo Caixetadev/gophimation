@@ -9,6 +9,7 @@ import (
 	"github.com/Caixetadev/gophimation/pkg/episode"
 	mostWatched "github.com/Caixetadev/gophimation/pkg/mostWatched"
 	"github.com/Caixetadev/gophimation/pkg/presence"
+	"github.com/Caixetadev/gophimation/pkg/random"
 	"github.com/Caixetadev/gophimation/pkg/search"
 	"github.com/Caixetadev/gophimation/pkg/selectVideo"
 	"github.com/Caixetadev/gophimation/pkg/util"
@@ -27,10 +28,14 @@ func init() {
 }
 
 func main() {
-	if len(os.Args) == 1 {
-		animeSelected := mostWatched.MostWatched()
-		watchEpisode(animeSelected)
-	} else {
+	switch {
+	case len(os.Args) > 1 && os.Args[1] == "random":
+		random.Random()
+
+	case len(os.Args) == 1:
+		watchEpisode(mostWatched.MostWatched())
+
+	default:
 		watchEpisode("")
 	}
 }
