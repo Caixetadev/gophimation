@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/Caixetadev/gophimation/pkg/configs"
+	"github.com/Caixetadev/gophimation/pkg/constants"
 	"github.com/Caixetadev/gophimation/pkg/models"
 	"github.com/Caixetadev/gophimation/pkg/util"
 	"github.com/gocolly/colly"
@@ -22,10 +23,10 @@ func MostWatched() string {
 		urlAnime := h.ChildAttr("a", "href")
 		name := h.ChildText(".highlight-title h3")
 
-		anime = append(anime, models.Anime{Name: name, URL: strings.TrimPrefix(urlAnime, "https://betteranime.net/")})
+		anime = append(anime, models.Anime{Name: name, URL: strings.TrimPrefix(urlAnime, constants.URL_BASE)})
 	})
 
-	c.Visit("https://betteranime.net/")
+	c.Visit(constants.URL_BASE)
 
 	for i, item := range anime {
 		fmt.Printf("[%02d] - %v\n", i+1, item.Name)

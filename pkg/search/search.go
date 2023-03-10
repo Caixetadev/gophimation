@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/Caixetadev/gophimation/pkg/configs"
+	"github.com/Caixetadev/gophimation/pkg/constants"
 	"github.com/Caixetadev/gophimation/pkg/models"
 	"github.com/Caixetadev/gophimation/pkg/util"
 	"github.com/gocolly/colly"
@@ -31,7 +32,7 @@ func Search() string {
 		episode := h.ChildAttr("a", "title")
 		urlAnime := h.ChildAttr("a", "href")
 
-		anime = append(anime, models.Anime{Name: episode, URL: strings.TrimPrefix(urlAnime, "https://betteranime.net/")})
+		anime = append(anime, models.Anime{Name: episode, URL: strings.TrimPrefix(urlAnime, constants.URL_BASE)})
 	})
 
 	c.Visit(URL)

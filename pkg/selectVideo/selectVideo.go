@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/Caixetadev/gophimation/pkg/configs"
+	"github.com/Caixetadev/gophimation/pkg/constants"
 	"github.com/Caixetadev/gophimation/pkg/util"
 	"github.com/gocolly/colly"
 )
@@ -19,7 +20,7 @@ type PlayerInfo struct {
 func SelectVideo(ep string) {
 	c := configs.Colly()
 
-	iframeURL, nameAnimeAndEpisode := util.GetIframe(fmt.Sprintf("https://betteranime.net/%s", ep))
+	iframeURL, nameAnimeAndEpisode := util.GetIframe(constants.URL_BASE + ep)
 
 	var urlPlayer []PlayerInfo
 

@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/Caixetadev/gophimation/pkg/configs"
+	"github.com/Caixetadev/gophimation/pkg/constants"
 	"github.com/Caixetadev/gophimation/pkg/models"
 	"github.com/Caixetadev/gophimation/pkg/presence"
 	"github.com/Caixetadev/gophimation/pkg/util"
@@ -25,7 +26,7 @@ func SelectEpisode(URL string) string {
 		episode := h.ChildText("a h3")
 		urlAnime := h.ChildAttr("a", "href")
 
-		episodes = append(episodes, models.Anime{Name: episode, URL: strings.TrimPrefix(urlAnime, "https://betteranime.net/")})
+		episodes = append(episodes, models.Anime{Name: episode, URL: strings.TrimPrefix(urlAnime, constants.URL_BASE)})
 	})
 
 	c.OnHTML("main.container", func(h *colly.HTMLElement) {
@@ -40,7 +41,7 @@ func SelectEpisode(URL string) string {
 		nameAnime2 = nameAnime
 	})
 
-	c.Visit(fmt.Sprintf("https://betteranime.net/%s", URL))
+	c.Visit(constants.URL_BASE + URL)
 
 	animeResponse := models.AnimeResponse{
 		Anime:    models.Anime{Name: nameAnime2, URL: image2},
