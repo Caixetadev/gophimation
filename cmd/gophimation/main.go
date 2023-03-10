@@ -45,5 +45,5 @@ func watchEpisode(previousSearch string) {
 
 	episodeSelected := episode.SelectEpisode(search2)
 
-	selectVideo.SelectVideo(episodeSelected, "caixeta aiinnn")
+	selectVideo.SelectVideo(episodeSelected)
 }

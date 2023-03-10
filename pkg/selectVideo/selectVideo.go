@@ -16,7 +16,7 @@ type PlayerInfo struct {
 }
 
 // SelectVideo does the search for the url of the video
-func SelectVideo(ep, nameAnime string) {
+func SelectVideo(ep string) {
 	c := configs.Colly()
 
 	iframeURL, nameAnimeAndEpisode := util.GetIframe(fmt.Sprintf("https://betteranime.net/%s", ep))
