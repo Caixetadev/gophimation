@@ -15,13 +15,13 @@ import (
 
 // Search does the search for the anime
 func Search() string {
-	flags := os.Args
+	searchTerm := os.Args
 	c := configs.Colly()
 
 	var URL string
 
-	for i := 1; i < len(flags); i++ {
-		URL += fmt.Sprintf("https://betteranime.net/pesquisa?titulo=%s&searchTerm=%s", flags[i]+"+", flags[i]+"+")
+	for i := 1; i < len(searchTerm); i++ {
+		URL += fmt.Sprintf("%spesquisa?titulo=%s&searchTerm=%s", constants.URL_BASE, searchTerm[i]+"+", searchTerm[i]+"+")
 	}
 
 	var selectedOption int
