@@ -5,14 +5,14 @@ import (
 	"path/filepath"
 )
 
-func GetHomeDir() string {
+func GetHomeDir(fileName string) string {
 	usr, err := user.Current()
 
 	if err != nil {
 		panic(err)
 	}
 
-	cacheDir := filepath.Join(usr.HomeDir, ".cache", "gophimation")
+	cacheDir := filepath.Join(usr.HomeDir, ".cache", fileName)
 
 	return cacheDir
 }
