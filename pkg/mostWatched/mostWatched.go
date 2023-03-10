@@ -1,4 +1,4 @@
-package mostwatched
+package mostWatched
 
 import (
 	"fmt"

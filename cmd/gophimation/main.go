@@ -7,7 +7,7 @@ import (
 
 	"github.com/Caixetadev/gophimation/pkg/constants"
 	"github.com/Caixetadev/gophimation/pkg/episode"
-	mostWatched "github.com/Caixetadev/gophimation/pkg/mostWatched"
+	"github.com/Caixetadev/gophimation/pkg/mostWatched"
 	"github.com/Caixetadev/gophimation/pkg/presence"
 	"github.com/Caixetadev/gophimation/pkg/random"
 	"github.com/Caixetadev/gophimation/pkg/search"
