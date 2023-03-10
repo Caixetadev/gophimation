@@ -48,6 +48,14 @@ func SelectEpisode(URL string) string {
 		Episodes: episodes,
 	}
 
+	util.Clear()
+
+	if URL == "random" {
+		fmt.Printf("O anime random é %s\n", animeResponse.Anime.Name)
+	}
+
+	fmt.Println()
+
 	for i, item := range animeResponse.Episodes {
 		fmt.Printf("[%02d] - %v\n", i+1, item.Name)
 	}
