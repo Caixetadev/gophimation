@@ -18,12 +18,14 @@ import (
 func init() {
 	presence.Presence("Caixeta", "https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png", "Explorando Animes", "Encontre seu próximo anime favorito <3", "")
 
-	_, error := os.Stat(constants.FILE_NAME)
+	pathFile := util.GetHomeDir(constants.FILE_NAME)
+
+	_, error := os.Stat(pathFile)
 
 	if os.IsNotExist(error) {
-		util.CreateFile(constants.FILE_NAME)
+		util.CreateFile(pathFile)
 	} else {
-		util.ReadFile(constants.FILE_NAME)
+		util.ReadFile(pathFile)
 	}
 }
 
