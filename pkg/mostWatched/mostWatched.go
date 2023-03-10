@@ -13,7 +13,7 @@ import (
 
 // MostWatched prints the most viewed anime of the week and returns its url
 func MostWatched() string {
-	var option int
+	var selectedOption int
 
 	c := configs.Colly()
 
@@ -34,11 +34,11 @@ func MostWatched() string {
 
 	fmt.Println("\ncoloque um numero para assistir")
 
-	fmt.Scanln(&option)
+	fmt.Scanln(&selectedOption)
 
-	util.OptionIsValid(anime, option)
+	util.OptionIsValid(anime, selectedOption)
 
 	util.Clear()
 
-	return anime[option-1].URL
+	return anime[selectedOption-1].URL
 }

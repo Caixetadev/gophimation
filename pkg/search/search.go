@@ -24,7 +24,7 @@ func Search() string {
 		URL += fmt.Sprintf("https://betteranime.net/pesquisa?titulo=%s&searchTerm=%s", flags[i]+"+", flags[i]+"+")
 	}
 
-	var option int
+	var selectedOption int
 
 	var anime []models.Anime
 
@@ -47,13 +47,13 @@ func Search() string {
 		log.Fatal("Não foi possivel achar o anime")
 	}
 
-	fmt.Scanln(&option)
+	fmt.Scanln(&selectedOption)
 
-	util.OptionIsValid(anime, option)
+	util.OptionIsValid(anime, selectedOption)
 
 	fmt.Println()
 
 	util.Clear()
 
-	return anime[option-1].URL
+	return anime[selectedOption-1].URL
 }

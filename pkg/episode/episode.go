@@ -13,7 +13,7 @@ import (
 )
 
 func SelectEpisode(URL string) string {
-	var option int
+	var selectedOption int
 	var episodes []models.Anime
 
 	var nameAnime2 string
@@ -54,16 +54,16 @@ func SelectEpisode(URL string) string {
 
 	fmt.Println("\ncoloque um numero para assistir")
 
-	fmt.Scanln(&option)
+	fmt.Scanln(&selectedOption)
 
-	// util.OptionIsValid(anime, option)
+	util.OptionIsValid(animeResponse.Episodes, selectedOption)
 
 	var watching string
 
-	if option < 10 {
-		watching = fmt.Sprintf("Episódio %02d", option)
+	if selectedOption < 10 {
+		watching = fmt.Sprintf("Episódio %02d", selectedOption)
 	} else {
-		watching = fmt.Sprintf("Episódio %d", option)
+		watching = fmt.Sprintf("Episódio %d", selectedOption)
 	}
 
 	util.Clear()
@@ -72,5 +72,5 @@ func SelectEpisode(URL string) string {
 
 	presence.Presence("Caixeta", "https:"+animeResponse.Anime.URL, animeResponse.Anime.Name, watching, "https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png")
 
-	return animeResponse.Episodes[option-1].URL
+	return animeResponse.Episodes[selectedOption-1].URL
 }
