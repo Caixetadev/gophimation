@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/Caixetadev/gophimation/pkg/configs"
+	"github.com/Caixetadev/gophimation/pkg/constants"
 	"github.com/Caixetadev/gophimation/pkg/models"
 	"github.com/Caixetadev/gophimation/pkg/presence"
 	"github.com/Caixetadev/gophimation/pkg/util"
@@ -12,7 +13,7 @@ import (
 )
 
 func SelectEpisode(URL string) string {
-	var option int
+	var selectedOption int
 	var episodes []models.Anime
 
 	var nameAnime2 string
@@ -25,7 +26,7 @@ func SelectEpisode(URL string) string {
 		episode := h.ChildText("a h3")
 		urlAnime := h.ChildAttr("a", "href")
 
-		episodes = append(episodes, models.Anime{Name: episode, URL: strings.TrimPrefix(urlAnime, "https://betteranime.net/")})
+		episodes = append(episodes, models.Anime{Name: episode, URL: strings.TrimPrefix(urlAnime, constants.URL_BASE)})
 	})
 
 	c.OnHTML("main.container", func(h *colly.HTMLElement) {
@@ -40,7 +41,7 @@ func SelectEpisode(URL string) string {
 		nameAnime2 = nameAnime
 	})
 
-	c.Visit(fmt.Sprintf("https://betteranime.net/%s", URL))
+	c.Visit(constants.URL_BASE + URL)
 
 	animeResponse := models.AnimeResponse{
 		Anime:    models.Anime{Name: nameAnime2, URL: image2},
@@ -53,16 +54,16 @@ func SelectEpisode(URL string) string {
 
 	fmt.Println("\ncoloque um numero para assistir")
 
-	fmt.Scanln(&option)
+	fmt.Scanln(&selectedOption)
 
-	// util.OptionIsValid(anime, option)
+	util.OptionIsValid(animeResponse.Episodes, selectedOption)
 
 	var watching string
 
-	if option < 10 {
-		watching = fmt.Sprintf("Episódio %02d", option)
+	if selectedOption < 10 {
+		watching = fmt.Sprintf("Episódio %02d", selectedOption)
 	} else {
-		watching = fmt.Sprintf("Episódio %d", option)
+		watching = fmt.Sprintf("Episódio %d", selectedOption)
 	}
 
 	util.Clear()
@@ -71,5 +72,5 @@ func SelectEpisode(URL string) string {
 
 	presence.Presence("Caixeta", "https:"+animeResponse.Anime.URL, animeResponse.Anime.Name, watching, "https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png")
 
-	return animeResponse.Episodes[option-1].URL
+	return animeResponse.Episodes[selectedOption-1].URL
 }

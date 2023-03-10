@@ -7,32 +7,24 @@ import (
 	"strings"
 
 	"github.com/Caixetadev/gophimation/pkg/configs"
+	"github.com/Caixetadev/gophimation/pkg/constants"
 	"github.com/Caixetadev/gophimation/pkg/models"
-	mostWatched "github.com/Caixetadev/gophimation/pkg/mostWatched"
 	"github.com/Caixetadev/gophimation/pkg/util"
 	"github.com/gocolly/colly"
 )
 
 // Search does the search for the anime
 func Search() string {
-	flags := os.Args
+	searchTerm := os.Args
 	c := configs.Colly()
-
-	var hasArgs = len(flags) == 1
-
-	if hasArgs {
-		URL := mostWatched.MostWatched()
-
-		return URL
-	}
 
 	var URL string
 
-	for i := 1; i < len(flags); i++ {
-		URL += fmt.Sprintf("https://betteranime.net/pesquisa?titulo=%s&searchTerm=%s", flags[i]+"+", flags[i]+"+")
+	for i := 1; i < len(searchTerm); i++ {
+		URL += fmt.Sprintf("%spesquisa?titulo=%s&searchTerm=%s", constants.URL_BASE, searchTerm[i]+"+", searchTerm[i]+"+")
 	}
 
-	var option int
+	var selectedOption int
 
 	var anime []models.Anime
 
@@ -40,7 +32,7 @@ func Search() string {
 		episode := h.ChildAttr("a", "title")
 		urlAnime := h.ChildAttr("a", "href")
 
-		anime = append(anime, models.Anime{Name: episode, URL: strings.TrimPrefix(urlAnime, "https://betteranime.net/")})
+		anime = append(anime, models.Anime{Name: episode, URL: strings.TrimPrefix(urlAnime, constants.URL_BASE)})
 	})
 
 	c.Visit(URL)
@@ -55,13 +47,13 @@ func Search() string {
 		log.Fatal("Não foi possivel achar o anime")
 	}
 
-	fmt.Scanln(&option)
+	fmt.Scanln(&selectedOption)
 
-	util.OptionIsValid(anime, option)
+	util.OptionIsValid(anime, selectedOption)
 
 	fmt.Println()
 
 	util.Clear()
 
-	return anime[option-1].URL
+	return anime[selectedOption-1].URL
 }
