@@ -7,7 +7,6 @@ import (
 	"github.com/Caixetadev/gophimation/pkg/configs"
 	"github.com/Caixetadev/gophimation/pkg/constants"
 	"github.com/Caixetadev/gophimation/pkg/models"
-	"github.com/Caixetadev/gophimation/pkg/presence"
 	"github.com/Caixetadev/gophimation/pkg/util"
 	"github.com/gocolly/colly"
 )
@@ -17,8 +16,6 @@ func SelectEpisode(URL string) string {
 	var episodes []models.Anime
 
 	var nameAnime string
-
-	var image string
 
 	c := configs.Colly()
 
@@ -36,9 +33,9 @@ func SelectEpisode(URL string) string {
 		episodes = append(episodes, models.Anime{Name: h.ChildText("a h3"), URL: strings.TrimPrefix(h.ChildAttr("a", "href"), constants.URL_BASE)})
 	})
 
-	c.OnHTML("main.container", func(h *colly.HTMLElement) {
-		image = h.ChildAttr(".infos-img img", "src")
-	})
+	// c.OnHTML("main.container", func(h *colly.HTMLElement) {
+	// 	image = h.ChildAttr(".infos-img img", "src")
+	// })
 
 	c.Visit(constants.URL_BASE + URL)
 
@@ -52,7 +49,7 @@ func SelectEpisode(URL string) string {
 
 	fmt.Println("Carregando...")
 
-	presence.Presence("Caixeta", "https:"+image, nameAnime, fmt.Sprintf("Episódio %02d", selectedOption), "https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png")
+	// presence.Presence("Caixeta", "https:"+image, nameAnime, fmt.Sprintf("Episódio %02d", selectedOption), "https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png")
 
 	return episodes[selectedOption-1].URL
 }
