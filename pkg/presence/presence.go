@@ -11,7 +11,7 @@ import (
 const CLIENT_ID = "1075841986923352079"
 
 // Presence sets the presence status of a Discord client with a custom activity
-func Presence(name, imageLarge, nameAnime, state, smallImage string) {
+func Presence(animeImage, animeName, state, smallImage string) {
 	err := client.Login(CLIENT_ID)
 
 	if err != nil {
@@ -23,9 +23,9 @@ func Presence(name, imageLarge, nameAnime, state, smallImage string) {
 
 	err = client.SetActivity(client.Activity{
 		State:      state,
-		Details:    nameAnime,
-		LargeImage: imageLarge,
-		LargeText:  nameAnime,
+		Details:    animeName,
+		LargeImage: animeImage,
+		LargeText:  animeName,
 		SmallImage: smallImage,
 		SmallText:  "Gophimation",
 		Timestamps: &client.Timestamps{
