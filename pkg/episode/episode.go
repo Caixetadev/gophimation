@@ -17,7 +17,6 @@ func SelectEpisode(URL string) string {
 	var episodes []models.Anime
 
 	var nameAnime string
-
 	var image string
 
 	c := configs.Colly()
@@ -52,7 +51,7 @@ func SelectEpisode(URL string) string {
 
 	fmt.Println("Carregando...")
 
-	presence.Presence("Caixeta", "https:"+image, nameAnime, fmt.Sprintf("Episódio %02d", selectedOption), "https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png")
+	go presence.Presence("https:"+image, nameAnime, fmt.Sprintf("Episódio %02d", selectedOption), "https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png")
 
 	return episodes[selectedOption-1].URL
 }

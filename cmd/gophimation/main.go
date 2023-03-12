@@ -8,7 +8,6 @@ import (
 	"github.com/Caixetadev/gophimation/pkg/constants"
 	"github.com/Caixetadev/gophimation/pkg/episode"
 	"github.com/Caixetadev/gophimation/pkg/mostWatched"
-	"github.com/Caixetadev/gophimation/pkg/presence"
 	"github.com/Caixetadev/gophimation/pkg/random"
 	"github.com/Caixetadev/gophimation/pkg/search"
 	"github.com/Caixetadev/gophimation/pkg/selectVideo"
@@ -16,7 +15,7 @@ import (
 )
 
 func init() {
-	presence.Presence("Caixeta", "https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png", "Explorando Animes", "Encontre seu próximo anime favorito <3", "")
+	// presence.Presence("Caixeta", "https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png", "Explorando Animes", "Encontre seu próximo anime favorito <3", "")
 
 	pathFile := util.GetHomeDir(constants.FILE_NAME)
 
