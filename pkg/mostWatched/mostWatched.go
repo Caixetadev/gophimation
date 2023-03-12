@@ -21,18 +21,13 @@ func MostWatched() string {
 	var anime []models.Anime
 
 	c.OnHTML(".highlights .highlight-card .highlight-body", func(h *colly.HTMLElement) {
-		urlAnime := h.ChildAttr("a", "href")
-		name := h.ChildText(".highlight-title h3")
+		fmt.Printf("[%02d] - %v\n", h.Index+1, h.ChildText(".highlight-title h3"))
 
-		anime = append(anime, models.Anime{Name: name, URL: strings.TrimPrefix(urlAnime, constants.URL_BASE)})
+		anime = append(anime, models.Anime{URL: strings.TrimPrefix(h.ChildAttr("a", "href"), constants.URL_BASE)})
 	})
 
 	if err := c.Visit(constants.URL_BASE); err != nil {
 		log.Fatal(err)
-	}
-
-	for i, item := range anime {
-		fmt.Printf("[%02d] - %v\n", i+1, item.Name)
 	}
 
 	fmt.Println("\ncoloque um numero para assistir")
