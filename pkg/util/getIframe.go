@@ -2,6 +2,7 @@ package util
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/Caixetadev/gophimation/pkg/configs"
 	"github.com/gocolly/colly"
@@ -24,7 +25,9 @@ func GetIframe(URL string) (string, string) {
 		iframe = h.Attr("src")
 	})
 
-	c.Visit(URL)
+	if err := c.Visit(URL); err != nil {
+		log.Fatal(err)
+	}
 
 	return iframe, nameAnimeAndEpisode
 }

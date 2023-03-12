@@ -1,6 +1,7 @@
 package util
 
 import (
+	"log"
 	"os"
 	"os/exec"
 	"runtime"
@@ -13,12 +14,16 @@ func init() {
 	clear["linux"] = func() {
 		cmd := exec.Command("clear") //Linux example, its tested
 		cmd.Stdout = os.Stdout
-		cmd.Run()
+		if err := cmd.Run(); err != nil {
+			log.Fatal(err)
+		}
 	}
 	clear["windows"] = func() {
 		cmd := exec.Command("cmd", "/c", "cls") //Windows example, its tested
 		cmd.Stdout = os.Stdout
-		cmd.Run()
+		if err := cmd.Run(); err != nil {
+			log.Fatal(err)
+		}
 	}
 }
 

@@ -2,6 +2,7 @@ package episode
 
 import (
 	"fmt"
+	"log"
 	"strings"
 
 	"github.com/Caixetadev/gophimation/pkg/configs"
@@ -39,7 +40,9 @@ func SelectEpisode(URL string) string {
 		image = h.ChildAttr(".infos-img img", "src")
 	})
 
-	c.Visit(constants.URL_BASE + URL)
+	if err := c.Visit(constants.URL_BASE + URL); err != nil {
+		log.Fatal(err)
+	}
 
 	fmt.Println("\ncoloque um numero para assistir")
 

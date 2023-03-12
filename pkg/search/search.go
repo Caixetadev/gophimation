@@ -31,7 +31,9 @@ func Search() string {
 		anime = append(anime, models.Anime{URL: strings.TrimPrefix(h.ChildAttr("a", "href"), constants.URL_BASE)})
 	})
 
-	c.Visit(URL)
+	if err := c.Visit(URL); err != nil {
+		log.Fatal(err)
+	}
 
 	if len(anime) == 0 {
 		log.Fatal("Não foi possivel achar o anime")
