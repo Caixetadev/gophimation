@@ -15,14 +15,12 @@ func PlayVideo(videoUrl, nameEpisode string) {
 		"linux":   "mpv",
 	}
 
-	cmd := exec.Command(executablesByOS[runtime.GOOS], "--save-position-on-quit", "--no-terminal", "--fs", fmt.Sprintf("--force-media-title=%v", nameEpisode), "--cache=yes", videoUrl)
+	cmd := exec.Command(executablesByOS[runtime.GOOS], videoUrl, "--fs", "--force-window=immediate", "--no-terminal", fmt.Sprintf("--force-media-title=%v", nameEpisode), "--cache=yes")
 	cmd.Stdout = os.Stdout
 
-	if err := cmd.Start(); err != nil {
+	if err := cmd.Run(); err != nil {
 		log.Fatalln(err)
 	}
-
-	fmt.Println("Abrindo player...")
 
 	// Set Discord user presence to show default presence
 	// presence.Presence("Caixeta", "https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png", "Explorando Animes", "Encontre seu próximo anime favorito <3", "")
