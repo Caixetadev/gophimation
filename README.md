@@ -8,7 +8,7 @@
 ![Bitbucket open issues](https://img.shields.io/bitbucket/issues/Caixetadev/gophimation?style=for-the-badge)
 ![Bitbucket open pull requests](https://img.shields.io/bitbucket/pr-raw/Caixetadev/gophimation?style=for-the-badge)
 
-<img src="https://github.com/iuricode/readme-template/blob/main/repository/exemplo-image.png" alt="exemplo imagem">
+https://user-images.githubusercontent.com/87894998/224532763-f82b90f2-06c5-4b44-8c96-c3eb2eab7244.mp4
 
 > Linha adicional de texto informativo sobre o que o projeto faz. Sua introdução deve ter cerca de 2 ou 3 linhas. Não exagere, as pessoas não vão ler.
 
