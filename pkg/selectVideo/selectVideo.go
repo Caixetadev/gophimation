@@ -67,7 +67,9 @@ func SelectVideo(ep string) {
 		fmt.Println(err)
 	})
 
-	c.Visit(iframeURL)
+	if err := c.Visit(iframeURL); err != nil {
+		log.Fatal(err)
+	}
 
 	jsonBytes, err := json.Marshal(urlPlayer)
 

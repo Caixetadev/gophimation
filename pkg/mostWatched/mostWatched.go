@@ -2,6 +2,7 @@ package mostWatched
 
 import (
 	"fmt"
+	"log"
 	"strings"
 
 	"github.com/Caixetadev/gophimation/pkg/configs"
@@ -26,7 +27,9 @@ func MostWatched() string {
 		anime = append(anime, models.Anime{Name: name, URL: strings.TrimPrefix(urlAnime, constants.URL_BASE)})
 	})
 
-	c.Visit(constants.URL_BASE)
+	if err := c.Visit(constants.URL_BASE); err != nil {
+		log.Fatal(err)
+	}
 
 	for i, item := range anime {
 		fmt.Printf("[%02d] - %v\n", i+1, item.Name)
