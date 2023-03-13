@@ -16,8 +16,8 @@ https://user-images.githubusercontent.com/87894998/224532763-f82b90f2-06c5-4b44-
 
 O projeto ainda está em desenvolvimento e as próximas atualizações serão voltadas nas seguintes tarefas:
 
-- [] Fazer o mpv abrir no Windows
-- [] Colocar mais opções de players
+- [ ] Fazer o mpv abrir no Windows
+- [ ] Colocar mais opções de players
 
 ## 💻 Pré-requisitos
 
