@@ -33,23 +33,15 @@ func main() {
 	case len(os.Args) > 1 && os.Args[1] == "random":
 		random.Random()
 
-	case len(os.Args) == 1:
-		watchEpisode(mostWatched.MostWatched())
+	case len(os.Args) > 1:
+		animeSearch := search.Search()
+		episodeSelected := episode.SelectEpisode(animeSearch)
+		selectVideo.SelectVideo(episodeSelected)
 
 	default:
-		watchEpisode("")
-	}
-}
-
-func watchEpisode(previousSearch string) {
-	var search2 string
-	if previousSearch != "" {
-		search2 = previousSearch
-	} else {
-		search2 = search.Search()
+		animeMostWatched := mostWatched.MostWatched()
+		episodeSelected := episode.SelectEpisode(animeMostWatched)
+		selectVideo.SelectVideo(episodeSelected)
 	}
 
-	episodeSelected := episode.SelectEpisode(search2)
-
-	selectVideo.SelectVideo(episodeSelected)
 }
