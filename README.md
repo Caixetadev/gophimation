@@ -37,7 +37,6 @@ Linux e macOS:
 ```
 
 Windows:
-```
 <comando_de_instalação>
 ```
 
