@@ -25,11 +25,7 @@ func Search() string {
 
 	var anime []entity.Anime
 
-	c.OnHTML(".list-animes article", func(h *colly.HTMLElement) {
-		fmt.Printf("[%02d] - %s\n", h.Index+1, h.ChildAttr("a", "title"))
-
-		anime = append(anime, entity.Anime{URL: strings.TrimPrefix(h.ChildAttr("a", "href"), constants.URL_BASE)})
-	})
+	setCollyCallbacksSearch(c, &anime)
 
 	if err := c.Visit(URL); err != nil {
 		log.Fatal(err)
@@ -39,13 +35,19 @@ func Search() string {
 		log.Fatal("Não foi possivel achar o anime")
 	}
 
-	fmt.Println("\ncoloque um numero para assistir")
-
-	fmt.Scanln(&selectedOption)
+	selectedOption = utils.GetUserInput("\nColoque um numero para assistir")
 
 	utils.OptionIsValid(anime, selectedOption)
 
 	utils.Clear()
 
 	return anime[selectedOption-1].URL
+}
+
+func setCollyCallbacksSearch(c *colly.Collector, anime *[]entity.Anime) {
+	c.OnHTML(".list-animes article", func(h *colly.HTMLElement) {
+		fmt.Printf("[%02d] - %s\n", h.Index+1, h.ChildAttr("a", "title"))
+
+		*anime = append(*anime, entity.Anime{URL: strings.TrimPrefix(h.ChildAttr("a", "href"), constants.URL_BASE)})
+	})
 }
