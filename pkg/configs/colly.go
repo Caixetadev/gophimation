@@ -30,13 +30,20 @@ func Colly() *colly.Collector {
 	}
 
 	cookie := &http.Cookie{
-		Name:   "BetterQuality",
-		Value:  "eyJpdiI6IlhNbnFZbVMwV2pHK2xNU1FBTUd1dEE9PSIsInZhbHVlIjoibmh4bVVBT1h2TVBJaEFXSzI3Q2xlUVlNMWxZTlpOSEZtUHBtcVlxa0hDSlRteHpQS083ZmpDQ2xramFOc29NciIsIm1hYyI6Ijg2NzA3M2ZkZDQ4MWY3YzgxNjIzZDQxZjViYzJhNGRjNGY5MTk3NzVhNzI2NWJkYzUxOGNiMDdmYzQyNTA2NGUiLCJ0YWciOiIifQ%3D%3D",
+		Name:   "betteranime_session",
+		Value:  "eyJpdiI6ImVqbEcwT0dQZWNNNjFuK0NwZUVjMnc9PSIsInZhbHVlIjoib3RQZFF0TEZGcTZwM2pjRFJ1aU8yOWRLOW5ORFh4M1pkSzdEblZ0T2IrMmxTSGgwaHNCUHVrQTZ1MDBEbkRkZy93aHIyak9xVWh1Wmc5K05BRUNqYUMrZzIvNzY4elpwNDRUMWplN2ZOMXNnd3k0QWgwb3p3SFZYYWF5S0g3RjAiLCJtYWMiOiJiYWViNTA2NTA4NTY1NTRiZmY0Yjg1Y2U2MzI4ZTdlZGYxNDUzNmU3NGMwZGRmMTM5MTQ4OTJmMGNjODQ2MjIwIiwidGFnIjoiIn0%3D",
 		Domain: "betteranime.net",
 		Path:   "/",
 	}
 
-	cookieJar.SetCookies(url, []*http.Cookie{cookie})
+	cookie2 := &http.Cookie{
+		Name:   "BetterQuality",
+		Value:  "eyJpdiI6ImVqbEcwT0dQZWNNNjFuK0NwZUVjMnc9PSIsInZhbHVlIjoib3RQZFF0TEZGcTZwM2pjRFJ1aU8yOWRLOW5ORFh4M1pkSzdEblZ0T2IrMmxTSGgwaHNCUHVrQTZ1MDBEbkRkZy93aHIyak9xVWh1Wmc5K05BRUNqYUMrZzIvNzY4elpwNDRUMWplN2ZOMXNnd3k0QWgwb3p3SFZYYWF5S0g3RjAiLCJtYWMiOiJiYWViNTA2NTA4NTY1NTRiZmY0Yjg1Y2U2MzI4ZTdlZGYxNDUzNmU3NGMwZGRmMTM5MTQ4OTJmMGNjODQ2MjIwIiwidGFnIjoiIn0%3D",
+		Domain: "betteranime.net",
+		Path:   "/",
+	}
+
+	cookieJar.SetCookies(url, []*http.Cookie{cookie, cookie2})
 
 	return c
 }

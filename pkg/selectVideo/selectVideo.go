@@ -20,7 +20,8 @@ type PlayerInfo struct {
 }
 
 // SelectVideo does the search for the url of the video
-func SelectVideo(ep string) {
+func SelectVideo(ep string) *PlayerInfo {
+	fmt.Println(ep)
 	var urlPlayer []PlayerInfo
 
 	// Initialize a new diskv store, rooted at "cache-dir", with a 10MB cache.
@@ -41,9 +42,7 @@ func SelectVideo(ep string) {
 			log.Fatal(err)
 		}
 
-		util.PlayVideo(urlPlayer[0].Url, urlPlayer[0].Name)
-
-		return
+		return &PlayerInfo{Name: urlPlayer[0].Name, Url: urlPlayer[0].Url}
 	}
 
 	c := configs.Colly()
@@ -82,5 +81,5 @@ func SelectVideo(ep string) {
 		log.Fatal(err)
 	}
 
-	util.PlayVideo(urlPlayer[0].Url, urlPlayer[0].Name)
+	return &PlayerInfo{Name: urlPlayer[0].Name, Url: urlPlayer[0].Url}
 }

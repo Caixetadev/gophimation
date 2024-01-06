@@ -6,5 +6,6 @@ import (
 )
 
 func Random() {
-	selectVideo.SelectVideo(episode.SelectEpisode("random"))
+	s, _ := episode.SelectEpisode("random")
+	selectVideo.SelectVideo(s)
 }

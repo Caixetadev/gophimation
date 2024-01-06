@@ -3,11 +3,13 @@ package main
 // Fazer opção para voltar para a lista de animes.
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/Caixetadev/gophimation/pkg/constants"
 	"github.com/Caixetadev/gophimation/pkg/episode"
 	"github.com/Caixetadev/gophimation/pkg/mostWatched"
+	"github.com/Caixetadev/gophimation/pkg/presence"
 	"github.com/Caixetadev/gophimation/pkg/random"
 	"github.com/Caixetadev/gophimation/pkg/search"
 	"github.com/Caixetadev/gophimation/pkg/selectVideo"
@@ -15,7 +17,7 @@ import (
 )
 
 func init() {
-	// presence.Presence("Caixeta", "https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png", "Explorando Animes", "Encontre seu próximo anime favorito <3", "")
+	go presence.Presence("https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png", "Explorando Animes", "Encontre seu próximo anime favorito <3", "")
 
 	pathFile := util.GetHomeDir(constants.FILE_NAME)
 
@@ -35,13 +37,16 @@ func main() {
 
 	case len(os.Args) > 1:
 		animeSearch := search.Search()
-		episodeSelected := episode.SelectEpisode(animeSearch)
+		episodeSelected, _ := episode.SelectEpisode(animeSearch)
 		selectVideo.SelectVideo(episodeSelected)
 
 	default:
 		animeMostWatched := mostWatched.MostWatched()
-		episodeSelected := episode.SelectEpisode(animeMostWatched)
-		selectVideo.SelectVideo(episodeSelected)
+		episodeSelected, nextEpisode := episode.SelectEpisode(animeMostWatched)
+		fmt.Printf("EP SELECIONADO: %s. PROXIMO EP: %s\n", episodeSelected, nextEpisode)
+		videoSelected := selectVideo.SelectVideo(episodeSelected)
+		go selectVideo.SelectVideo(nextEpisode)
+		util.PlayVideo(videoSelected.Url, videoSelected.Name)
 	}
 
 }
