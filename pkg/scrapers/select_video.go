@@ -1,4 +1,4 @@
-package selectVideo
+package scrapers
 
 import (
 	"encoding/json"
@@ -7,9 +7,9 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/Caixetadev/gophimation/pkg/configs"
+	"github.com/Caixetadev/gophimation/config"
+	"github.com/Caixetadev/gophimation/internal/utils"
 	"github.com/Caixetadev/gophimation/pkg/constants"
-	"github.com/Caixetadev/gophimation/pkg/util"
 	"github.com/gocolly/colly"
 	"github.com/peterbourgon/diskv/v3"
 )
@@ -26,7 +26,7 @@ func SelectVideo(ep string) *PlayerInfo {
 
 	// Initialize a new diskv store, rooted at "cache-dir", with a 10MB cache.
 	d := diskv.New(diskv.Options{
-		BasePath:     util.GetHomeDir("gophimation"),
+		BasePath:     utils.GetHomeDir("gophimation"),
 		Transform:    func(s string) []string { return []string{} },
 		CacheSizeMax: 10 * 1024 * 1024,
 	})
@@ -45,9 +45,9 @@ func SelectVideo(ep string) *PlayerInfo {
 		return &PlayerInfo{Name: urlPlayer[0].Name, Url: urlPlayer[0].Url}
 	}
 
-	c := configs.Colly()
+	c := config.Colly()
 
-	iframeURL, nameAnimeAndEpisode := util.GetIframe(constants.URL_BASE + ep)
+	iframeURL, nameAnimeAndEpisode := utils.GetIframe(constants.URL_BASE + ep)
 
 	c.OnRequest(func(r *colly.Request) {
 		r.Headers.Set("Referer", constants.URL_BASE)

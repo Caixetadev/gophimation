@@ -1,26 +1,26 @@
-package episode
+package scrapers
 
 import (
 	"fmt"
 	"log"
 	"strings"
 
-	"github.com/Caixetadev/gophimation/pkg/configs"
+	"github.com/Caixetadev/gophimation/config"
+	"github.com/Caixetadev/gophimation/internal/entity"
+	"github.com/Caixetadev/gophimation/internal/presence"
+	"github.com/Caixetadev/gophimation/internal/utils"
 	"github.com/Caixetadev/gophimation/pkg/constants"
-	"github.com/Caixetadev/gophimation/pkg/models"
-	"github.com/Caixetadev/gophimation/pkg/presence"
-	"github.com/Caixetadev/gophimation/pkg/util"
 	"github.com/gocolly/colly"
 )
 
 func SelectEpisode(URL string) (string, *string) {
 	var selectedOption int
-	var episodes []models.Anime
+	var episodes []entity.Anime
 
 	var nameAnime string
 	var image string
 
-	c := configs.Colly()
+	c := config.Colly()
 
 	c.OnHTML(".infos_left .anime-info", func(h *colly.HTMLElement) {
 		nameAnime = h.ChildText("h2")
@@ -33,7 +33,7 @@ func SelectEpisode(URL string) (string, *string) {
 	c.OnHTML("#episodesList .list-group-item-action", func(h *colly.HTMLElement) {
 		fmt.Printf("[%02d] - %v\n", h.Index+1, h.ChildText("a h3"))
 
-		episodes = append(episodes, models.Anime{Name: h.ChildText("a h3"), URL: strings.TrimPrefix(h.ChildAttr("a", "href"), constants.URL_BASE)})
+		episodes = append(episodes, entity.Anime{Name: h.ChildText("a h3"), URL: strings.TrimPrefix(h.ChildAttr("a", "href"), constants.URL_BASE)})
 	})
 
 	c.OnHTML("main.container", func(h *colly.HTMLElement) {
@@ -48,9 +48,9 @@ func SelectEpisode(URL string) (string, *string) {
 
 	fmt.Scanln(&selectedOption)
 
-	util.OptionIsValid(episodes, selectedOption)
+	utils.OptionIsValid(episodes, selectedOption)
 
-	util.Clear()
+	utils.Clear()
 
 	fmt.Println("Carregando...")
 

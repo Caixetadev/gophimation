@@ -1,4 +1,4 @@
-package search
+package scrapers
 
 import (
 	"fmt"
@@ -6,16 +6,16 @@ import (
 	"os"
 	"strings"
 
-	"github.com/Caixetadev/gophimation/pkg/configs"
+	"github.com/Caixetadev/gophimation/config"
+	"github.com/Caixetadev/gophimation/internal/entity"
+	"github.com/Caixetadev/gophimation/internal/utils"
 	"github.com/Caixetadev/gophimation/pkg/constants"
-	"github.com/Caixetadev/gophimation/pkg/models"
-	"github.com/Caixetadev/gophimation/pkg/util"
 	"github.com/gocolly/colly"
 )
 
 // Search does the search for the anime
 func Search() string {
-	c := configs.Colly()
+	c := config.Colly()
 
 	searchTerm := strings.Join(os.Args[1:], "+")
 
@@ -23,12 +23,12 @@ func Search() string {
 
 	var selectedOption int
 
-	var anime []models.Anime
+	var anime []entity.Anime
 
 	c.OnHTML(".list-animes article", func(h *colly.HTMLElement) {
 		fmt.Printf("[%02d] - %s\n", h.Index+1, h.ChildAttr("a", "title"))
 
-		anime = append(anime, models.Anime{URL: strings.TrimPrefix(h.ChildAttr("a", "href"), constants.URL_BASE)})
+		anime = append(anime, entity.Anime{URL: strings.TrimPrefix(h.ChildAttr("a", "href"), constants.URL_BASE)})
 	})
 
 	if err := c.Visit(URL); err != nil {
@@ -43,9 +43,9 @@ func Search() string {
 
 	fmt.Scanln(&selectedOption)
 
-	util.OptionIsValid(anime, selectedOption)
+	utils.OptionIsValid(anime, selectedOption)
 
-	util.Clear()
+	utils.Clear()
 
 	return anime[selectedOption-1].URL
 }

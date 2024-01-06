@@ -1,4 +1,4 @@
-package models
+package entity
 
 type Anime struct {
 	Name string `json:"name"`

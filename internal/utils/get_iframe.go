@@ -1,15 +1,15 @@
-package util
+package utils
 
 import (
 	"fmt"
 	"log"
 
-	"github.com/Caixetadev/gophimation/pkg/configs"
+	"github.com/Caixetadev/gophimation/config"
 	"github.com/gocolly/colly"
 )
 
 func GetIframe(URL string) (string, string) {
-	c := configs.Colly()
+	c := config.Colly()
 
 	var iframe string
 	var nameAnimeAndEpisode string
