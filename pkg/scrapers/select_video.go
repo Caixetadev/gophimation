@@ -2,6 +2,7 @@ package scrapers
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"regexp"
@@ -26,9 +27,9 @@ func SelectVideo(ep string) *PlayerInfo {
 
 	key := strings.ReplaceAll(strings.ReplaceAll(ep, "-", "_"), "/", "_")
 
-	cacheManager := cache.NewCacheManager(key)
+	cacheManager := cache.NewCacheManager()
 
-	data, _ := cacheManager.ReadFromCache()
+	data, _ := cacheManager.ReadFromCache(key)
 
 	err := getPlayerInfoFromCache(data, &urlPlayer)
 	if err == nil {
@@ -46,12 +47,11 @@ func SelectVideo(ep string) *PlayerInfo {
 	}
 
 	jsonBytes, err := json.Marshal(urlPlayer)
-
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	err = cacheManager.WriteToCache(jsonBytes)
+	err = cacheManager.WriteToCache(key, jsonBytes)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -60,12 +60,13 @@ func SelectVideo(ep string) *PlayerInfo {
 }
 
 func getPlayerInfoFromCache(data []byte, player *[]PlayerInfo) error {
-	if len(data) > 1 {
+	if len(data) > 0 {
 		err := json.Unmarshal(data, player)
-
 		if err != nil {
-			log.Fatal(err)
+			return err
 		}
+	} else {
+		return errors.New("dados de cache vazios")
 	}
 
 	return nil
