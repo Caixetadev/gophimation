@@ -39,11 +39,13 @@ func SelectEpisode(URL string) (string, *string) {
 
 	updatePresence(image, nameAnime, selectedOption)
 
+	episodeSelected := episodes[selectedOption-1].URL
+
 	if selectedOption == len(episodes) {
-		return episodes[selectedOption-1].URL, nil
+		return episodeSelected, nil
 	}
 
-	return episodes[selectedOption-1].URL, &episodes[(selectedOption+1)-1].URL
+	return episodeSelected, &episodes[(selectedOption+1)-1].URL
 }
 
 func setCollyCallbacksEpisodes(c *colly.Collector, nameAnime *string, episodes *[]entity.Anime, image *string, URL string) {
