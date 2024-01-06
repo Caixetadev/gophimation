@@ -13,7 +13,7 @@ import (
 	"github.com/gocolly/colly"
 )
 
-func SelectEpisode(URL string) (string, string) {
+func SelectEpisode(URL string) (string, *string) {
 	var selectedOption int
 	var episodes []models.Anime
 
@@ -56,5 +56,9 @@ func SelectEpisode(URL string) (string, string) {
 
 	go presence.Presence("https:"+image, nameAnime, fmt.Sprintf("Episódio %02d", selectedOption), "https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png")
 
-	return episodes[selectedOption-1].URL, episodes[(selectedOption+1)-1].URL
+	if selectedOption == len(episodes) {
+		return episodes[selectedOption-1].URL, nil
+	}
+
+	return episodes[selectedOption-1].URL, &episodes[(selectedOption+1)-1].URL
 }

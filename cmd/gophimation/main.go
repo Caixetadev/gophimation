@@ -3,7 +3,6 @@ package main
 // Fazer opção para voltar para a lista de animes.
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/Caixetadev/gophimation/pkg/constants"
@@ -37,15 +36,19 @@ func main() {
 
 	case len(os.Args) > 1:
 		animeSearch := search.Search()
-		episodeSelected, _ := episode.SelectEpisode(animeSearch)
-		selectVideo.SelectVideo(episodeSelected)
-
+		episodeSelected, nextEpisode := episode.SelectEpisode(animeSearch)
+		videoSelected := selectVideo.SelectVideo(episodeSelected)
+		if nextEpisode != nil {
+			go selectVideo.SelectVideo(*nextEpisode)
+		}
+		util.PlayVideo(videoSelected.Url, videoSelected.Name)
 	default:
 		animeMostWatched := mostWatched.MostWatched()
 		episodeSelected, nextEpisode := episode.SelectEpisode(animeMostWatched)
-		fmt.Printf("EP SELECIONADO: %s. PROXIMO EP: %s\n", episodeSelected, nextEpisode)
 		videoSelected := selectVideo.SelectVideo(episodeSelected)
-		go selectVideo.SelectVideo(nextEpisode)
+		if nextEpisode != nil {
+			go selectVideo.SelectVideo(*nextEpisode)
+		}
 		util.PlayVideo(videoSelected.Url, videoSelected.Name)
 	}
 
