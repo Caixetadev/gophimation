@@ -47,5 +47,4 @@ func main() {
 		}
 		utils.PlayVideo(videoSelected.Url, videoSelected.Name)
 	}
-
 }
