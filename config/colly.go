@@ -21,7 +21,9 @@ func CollyPastebin() string {
 		cookie = e.Text
 	})
 
-	c.Visit("https://pastebin.com/9iNGXsDt")
+	if err := c.Visit("https://pastebin.com/9iNGXsDt"); err != nil {
+		log.Fatal(err)
+	}
 
 	return cookie
 }
