@@ -5,7 +5,6 @@ go 1.20
 require (
 	github.com/gocolly/colly v1.2.0
 	github.com/hugolgst/rich-go v0.0.0-20210925091458-d59fb695d9c0
-	github.com/peterbourgon/diskv/v3 v3.0.1
 )
 
 require (
@@ -17,7 +16,6 @@ require (
 	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.3.1 // indirect
-	github.com/google/btree v1.0.0 // indirect
 	github.com/kennygrant/sanitize v1.2.4 // indirect
 	github.com/saintfish/chardet v0.0.0-20230101081208-5e3ef4b5456d // indirect
 	github.com/temoto/robotstxt v1.1.2 // indirect
