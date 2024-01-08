@@ -4,6 +4,7 @@ package main
 
 import (
 	"os"
+	"time"
 
 	"github.com/Caixetadev/gophimation/internal/presence"
 	"github.com/Caixetadev/gophimation/internal/utils"
@@ -12,6 +13,19 @@ import (
 )
 
 func init() {
+	go func() {
+		folders, err := os.ReadDir("/home/caixeta/.cache/gophimation")
+
+		if err == nil {
+			for _, folder := range folders {
+				info, _ := folder.Info()
+				if time.Since(info.ModTime()) > time.Hour*1 {
+					go os.RemoveAll("/home/caixeta/.cache/gophimation/" + folder.Name())
+				}
+			}
+		}
+	}()
+
 	go presence.Presence("https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png", "Explorando Animes", "Encontre seu próximo anime favorito <3", "")
 
 	pathFile := utils.GetHomeDir(constants.FILE_NAME)
@@ -21,7 +35,7 @@ func init() {
 	if os.IsNotExist(error) {
 		utils.CreateFile(pathFile)
 	} else {
-		utils.ReadFile(pathFile)
+		go utils.ReadFile(pathFile)
 	}
 }
 
