@@ -19,7 +19,6 @@ type PlayerInfo struct {
 
 // SelectVideo does the search for the url of the video
 func SelectVideo(ep string) *PlayerInfo {
-	fmt.Println(ep)
 	var urlPlayer []PlayerInfo
 
 	c := config.Colly()
