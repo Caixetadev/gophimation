@@ -1,15 +1,12 @@
 package scrapers
 
 import (
-	"encoding/json"
-	"errors"
 	"fmt"
 	"log"
 	"regexp"
 	"strings"
 
 	"github.com/Caixetadev/gophimation/config"
-	"github.com/Caixetadev/gophimation/internal/cache"
 	"github.com/Caixetadev/gophimation/internal/utils"
 	"github.com/Caixetadev/gophimation/pkg/constants"
 	"github.com/gocolly/colly"
@@ -25,17 +22,6 @@ func SelectVideo(ep string) *PlayerInfo {
 	fmt.Println(ep)
 	var urlPlayer []PlayerInfo
 
-	key := strings.ReplaceAll(strings.ReplaceAll(ep, "-", "_"), "/", "_")
-
-	cacheManager := cache.NewCacheManager()
-
-	data, _ := cacheManager.ReadFromCache(key)
-
-	err := getPlayerInfoFromCache(data, &urlPlayer)
-	if err == nil {
-		return &PlayerInfo{Name: urlPlayer[0].Name, Url: urlPlayer[0].Url}
-	}
-
 	c := config.Colly()
 
 	iframeURL, nameAnimeAndEpisode := utils.GetIframe(constants.URL_BASE + ep)
@@ -46,30 +32,7 @@ func SelectVideo(ep string) *PlayerInfo {
 		log.Fatal(err)
 	}
 
-	jsonBytes, err := json.Marshal(urlPlayer)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	err = cacheManager.WriteToCache(key, jsonBytes)
-	if err != nil {
-		log.Fatal(err)
-	}
-
 	return &PlayerInfo{Name: urlPlayer[0].Name, Url: urlPlayer[0].Url}
-}
-
-func getPlayerInfoFromCache(data []byte, player *[]PlayerInfo) error {
-	if len(data) > 0 {
-		err := json.Unmarshal(data, player)
-		if err != nil {
-			return err
-		}
-	} else {
-		return errors.New("dados de cache vazios")
-	}
-
-	return nil
 }
 
 func setCollyCallbacksPlayer(c *colly.Collector, player *[]PlayerInfo, nameAnimeAndEpisode string) {
