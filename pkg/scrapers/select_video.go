@@ -7,7 +7,6 @@ import (
 	"strings"
 
 	"github.com/Caixetadev/gophimation/config"
-	"github.com/Caixetadev/gophimation/internal/utils"
 	"github.com/Caixetadev/gophimation/pkg/constants"
 	"github.com/gocolly/colly"
 )
@@ -23,7 +22,7 @@ func SelectVideo(ep string) *PlayerInfo {
 
 	c := config.Colly()
 
-	iframeURL, nameAnimeAndEpisode := utils.GetIframe(constants.URL_BASE + ep)
+	iframeURL, nameAnimeAndEpisode := GetIframe(constants.URL_BASE + ep)
 
 	setCollyCallbacksPlayer(c, &urlPlayer, nameAnimeAndEpisode)
 
