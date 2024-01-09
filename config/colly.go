@@ -1,17 +1,19 @@
 package config
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"net/http/cookiejar"
 	"net/url"
+	"os/user"
 
 	"github.com/gocolly/colly"
 )
 
-func CollyPastebin() string {
+func CollyPastebin(userHomeDir string) string {
 	c := colly.NewCollector(
-		colly.CacheDir("/home/caixeta/.cache/gophimation"),
+		colly.CacheDir(fmt.Sprintf("%s/.cache/gophimation/anime", userHomeDir)),
 		colly.AllowedDomains("pastebin.com"),
 		colly.UserAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"),
 	)
@@ -29,8 +31,13 @@ func CollyPastebin() string {
 }
 
 func Colly() *colly.Collector {
+	user, err := user.Current()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	c := colly.NewCollector(
-		colly.CacheDir("/home/caixeta/.cache/gophimation"),
+		colly.CacheDir(fmt.Sprintf("%s/.cache/gophimation/anime", user.HomeDir)),
 		colly.AllowedDomains("betteranime.net"),
 		colly.UserAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"),
 	)
@@ -49,7 +56,7 @@ func Colly() *colly.Collector {
 		log.Fatal(err)
 	}
 
-	cookiePastebin := CollyPastebin()
+	cookiePastebin := CollyPastebin(user.HomeDir)
 
 	cookie := &http.Cookie{
 		Name:   "betteranime_session",
