@@ -13,29 +13,17 @@ import (
 )
 
 func init() {
-	go func() {
-		folders, err := os.ReadDir("/home/caixeta/.cache/gophimation")
-
-		if err == nil {
-			for _, folder := range folders {
-				info, _ := folder.Info()
-				if time.Since(info.ModTime()) > time.Hour*1 {
-					go os.RemoveAll("/home/caixeta/.cache/gophimation/" + folder.Name())
-				}
-			}
-		}
-	}()
-
+	go utils.CleanCache(time.Hour * 3)
 	go presence.Presence("https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png", "Explorando Animes", "Encontre seu próximo anime favorito <3", "")
 
-	pathFile := utils.GetHomeDir(constants.FILE_NAME)
+	rootDir := utils.GetCacheDir("user")
 
-	_, error := os.Stat(pathFile)
+	_, error := os.Stat(rootDir)
 
 	if os.IsNotExist(error) {
-		utils.CreateFile(pathFile)
+		utils.CreateFile(rootDir, constants.USER_SETTINGS_FILE)
 	} else {
-		go utils.ReadFile(pathFile)
+		go utils.ReadFile(rootDir, constants.USER_SETTINGS_FILE)
 	}
 }
 
@@ -44,6 +32,15 @@ func main() {
 	case len(os.Args) > 1 && os.Args[1] == "random":
 		scrapers.Random()
 
+	case len(os.Args) > 1 && os.Args[1] == "--delete-cache":
+		go utils.CleanCache(time.Second * 1)
+		animeMostWatched := scrapers.MostWatched()
+		episodeSelected, nextEpisode := scrapers.SelectEpisode(animeMostWatched)
+		videoSelected := scrapers.SelectVideo(episodeSelected)
+		if nextEpisode != nil {
+			go scrapers.SelectVideo(*nextEpisode)
+		}
+		utils.PlayVideo(videoSelected.Url, videoSelected.Name)
 	case len(os.Args) > 1:
 		animeSearch := scrapers.Search()
 		episodeSelected, nextEpisode := scrapers.SelectEpisode(animeSearch)

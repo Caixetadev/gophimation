@@ -10,8 +10,9 @@ import (
 // ReadFile reads the specified file and unmarshals its JSON content
 // into a UserConfig struct. It then calls the Greeting function to
 // display a welcome message for the user.
-func ReadFile(fileName string) {
-	data, err := os.ReadFile(fileName)
+func ReadFile(rootDir string, fileName string) {
+	fmt.Println(rootDir + fileName)
+	data, err := os.ReadFile(rootDir + fileName)
 
 	var user UserConfig
 
@@ -23,7 +24,7 @@ func ReadFile(fileName string) {
 
 	Greeting(user.Name)
 
-	fmt.Println()
+	fmt.Print("\n")
 
 	if err != nil {
 		log.Panicf("failed reading data from file: %s", err)

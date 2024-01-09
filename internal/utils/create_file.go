@@ -15,14 +15,19 @@ type UserConfig struct {
 // CreateFile prompts the user to enter their name, creates a new file
 // with the specified name, and writes the user's name to the file as
 // JSON data in a UserConfig struct format.
-func CreateFile(fileName string) {
+func CreateFile(rootDir string, filename string) {
 	var name string
 
 	fmt.Println("Qual o seu nome?")
 
 	fmt.Scanln(&name)
 
-	file, err := os.Create(fileName)
+	err := os.Mkdir(rootDir, 0777)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	file, err := os.Create(rootDir + filename)
 
 	data := UserConfig{
 		Name: name,
@@ -40,7 +45,7 @@ func CreateFile(fileName string) {
 		log.Fatal(err)
 	}
 
-	err = os.WriteFile(fileName, user, 0644)
+	err = os.WriteFile(rootDir+filename, user, 0644)
 
 	if err != nil {
 		log.Fatal(err)
