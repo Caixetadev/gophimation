@@ -51,16 +51,6 @@ func app() {
 	var searchResult string
 
 	switch {
-	// case len(os.Args) > 1 && os.Args[1] == "random":
-	// 	nextEpisode, currentEpIndex, episodes := scrapers.SelectEpisode("random")
-	// 	getSelectedVideo(episodes, currentEpIndex)
-	// 	if nextEpisode != nil {
-	// 		go scrapers.SelectVideo(*nextEpisode)
-	// 	}
-	//
-	// 	currentEpisodeIndex = currentEpIndex
-	// 	watchedEpisodes = episodes
-	// searchResult = animeMostWatched
 	case len(os.Args) > 1 && os.Args[1] == "--delete-cache":
 		go utils.CleanCache(time.Second * 1)
 		animeMostWatched := scrapers.MostWatched()
