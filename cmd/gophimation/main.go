@@ -35,7 +35,7 @@ func getSelectedVideo(episodes []entity.Anime, index int) {
 	utils.PlayVideo(videoSelected.Url, videoSelected.Name)
 }
 
-func semNome(animeSelected string) (int, []entity.Anime) {
+func fetchAnimeData(animeSelected string) (int, []entity.Anime) {
 	nextEpisode, currentEpIndex, episodes := scrapers.SelectEpisode(animeSelected)
 	getSelectedVideo(episodes, currentEpIndex)
 	if nextEpisode != nil {
@@ -54,13 +54,13 @@ func app() {
 	case len(os.Args) > 1 && os.Args[1] == "--delete-cache":
 		go utils.CleanCache(time.Second * 1)
 		animeMostWatched := scrapers.MostWatched()
-		currentEpisodeIndex, watchedEpisodes = semNome(animeMostWatched)
+		currentEpisodeIndex, watchedEpisodes = fetchAnimeData(animeMostWatched)
 	case len(os.Args) > 1:
 		animeSearch := scrapers.Search()
-		currentEpisodeIndex, watchedEpisodes = semNome(animeSearch)
+		currentEpisodeIndex, watchedEpisodes = fetchAnimeData(animeSearch)
 	default:
 		animeMostWatched := scrapers.MostWatched()
-		currentEpisodeIndex, watchedEpisodes = semNome(animeMostWatched)
+		currentEpisodeIndex, watchedEpisodes = fetchAnimeData(animeMostWatched)
 	}
 
 	utils.Clear()
