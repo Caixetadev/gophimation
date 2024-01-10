@@ -88,8 +88,8 @@ func app() {
 
 			getSelectedVideo(watchedEpisodes, currentEpisodeIndex)
 
-			if currentEpisodeIndex-1 <= len(watchedEpisodes) {
-				go scrapers.SelectVideo(watchedEpisodes[(currentEpisodeIndex+1)-1].URL)
+			if currentEpisodeIndex+1 < len(watchedEpisodes) {
+				go scrapers.SelectVideo(watchedEpisodes[currentEpisodeIndex+1].URL)
 			}
 		case "r":
 			getSelectedVideo(watchedEpisodes, currentEpisodeIndex)
