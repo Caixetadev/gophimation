@@ -15,7 +15,7 @@ import (
 
 const userPromptEpisode = "\nColoque um numero para assistir"
 
-func SelectEpisode(URL string) (string, *string) {
+func SelectEpisode(URL string) (*string, int, []entity.Anime) {
 	c := config.Colly()
 
 	var selectedOption int
@@ -39,13 +39,11 @@ func SelectEpisode(URL string) (string, *string) {
 
 	updatePresence(image, nameAnime, selectedOption)
 
-	episodeSelected := episodes[selectedOption-1].URL
-
 	if selectedOption == len(episodes) {
-		return episodeSelected, nil
+		return nil, selectedOption - 1, episodes
 	}
 
-	return episodeSelected, &episodes[(selectedOption+1)-1].URL
+	return &episodes[(selectedOption+1)-1].URL, selectedOption - 1, episodes
 }
 
 func setCollyCallbacksEpisodes(c *colly.Collector, nameAnime *string, episodes *[]entity.Anime, image *string, URL string) {
