@@ -66,6 +66,8 @@ func app() {
 	utils.Clear()
 
 	for {
+		utils.Clear()
+
 		var optionSelected string
 
 		options := []string{
