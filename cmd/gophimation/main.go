@@ -1,7 +1,5 @@
 package main
 
-// Fazer opção para voltar para a lista de animes.
-
 import (
 	"fmt"
 	"os"
