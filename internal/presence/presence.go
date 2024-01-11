@@ -31,12 +31,6 @@ func Presence(animeImage, animeName, state, smallImage string) {
 		Timestamps: &client.Timestamps{
 			Start: &now,
 		},
-		Buttons: []*client.Button{
-			{
-				Label: "Website",
-				Url:   "https://gophimation.vercel.app/",
-			},
-		},
 	})
 
 	if err != nil {
