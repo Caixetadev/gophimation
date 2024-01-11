@@ -8,6 +8,7 @@ import (
 	"github.com/gocolly/colly"
 )
 
+// GetIframe performs web scraping on an anime page to extract the iframe tag.
 func GetIframe(URL string) (string, string) {
 	c := config.Colly()
 

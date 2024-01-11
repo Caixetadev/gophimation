@@ -5,6 +5,8 @@ import (
 	"time"
 )
 
+// CleanCache clears the cache, expecting a parameter named cacheDuration of type time.Duration
+// that determines the maximum duration a cache file is allowed to exist before being deleted.
 func CleanCache(cacheDuration time.Duration) {
 	cacheDir := GetCacheDir("anime")
 	folders, err := os.ReadDir(cacheDir)

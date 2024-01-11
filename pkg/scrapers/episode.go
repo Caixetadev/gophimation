@@ -15,6 +15,7 @@ import (
 
 const userPromptEpisode = "\nColoque um numero para assistir"
 
+// SelectEpisode performs web scraping on the episodes page, allowing the user to choose the desired episode.
 func SelectEpisode(URL string) (*string, int, []entity.Anime) {
 	c := config.Colly()
 
