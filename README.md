@@ -10,44 +10,51 @@
 
 https://user-images.githubusercontent.com/87894998/224532763-f82b90f2-06c5-4b44-8c96-c3eb2eab7244.mp4
 
-> Gophimation é uma ferramenta de linha de comando feita em Golang que permite assistir seus animes favoritos diretamente do terminal, sem a distração de anúncios e outras interrupções indesejadas.
+> Gophimation is a command-line tool built in Golang that allows you to watch your favorite anime directly from the terminal, without the distraction of ads and other unwanted interruptions.
 
-### Ajustes e melhorias
+### Adjustments and Improvements
 
-O projeto ainda está em desenvolvimento e as próximas atualizações serão voltadas nas seguintes tarefas:
+The project is still in development, and upcoming updates will focus on the following tasks:
+- [ ] Make mpv work on Windows
+- [ ] Add more player options
 
-- [ ] Fazer o mpv abrir no Windows
-- [ ] Colocar mais opções de players
+## 💻 Prerequisites
 
-## 💻 Pré-requisitos
-
-Antes de começar, verifique se você atendeu aos seguintes requisitos:
-<!---Estes são apenas requisitos de exemplo. Adicionar, duplicar ou remover conforme necessário--->
+Before you begin, make sure you have met the following requirements:
 * mpv
 
-## 🚀 Instalando Gophimation
+## 🚀 Installing Gophimation
 
-Para instalar o Gophimation, siga estas etapas:
+To install Gophimation, follow these steps:
 
-Linux e macOS:
+Linux and macOS:
 ```
 <comando_de_instalação>
 ```
 
-## ☕ Usando <nome_do_projeto>
+## ☕ Using Gophimation
 
-Para usar <nome_do_projeto>, siga estas etapas:
-
+To search for an anime:
 ```
-<exemplo_de_uso>
+gophimation animename
 ```
 
-## 😄 Seja um dos contribuidores<br>
+to search for a random anime:
+```
+gophimation random
+```
 
-Quer fazer parte desse projeto? Clique [AQUI](CONTRIBUTING.md) e leia como contribuir.
+to search for the most watched anime of the week:
+```
+gophimation
+```
 
-## 📝 Licença
+## 😄 Be one of the contributors
 
-Esse projeto está sob licença. Veja o arquivo [LICENÇA](LICENSE) para mais detalhes.
+Want to be part of this project? Click [HERE](CONTRIBUTING.md) and read how to contribute.
 
-[⬆ Voltar ao topo](#nome-do-projeto)<br>
+## 📝 License
+
+This project is under license. See the [LICENÇA](LICENSE)  file for more details
+
+[⬆ Go to top](#nome-do-projeto)<br>
