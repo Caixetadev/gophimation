@@ -22,7 +22,7 @@ func CreateFile(rootDir string, filename string) {
 
 	fmt.Scanln(&name)
 
-	err := os.Mkdir(rootDir, 0777)
+	err := os.MkdirAll(rootDir, 0777)
 	if err != nil {
 		log.Fatal(err)
 	}
