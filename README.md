@@ -27,9 +27,13 @@ Before you begin, make sure you have met the following requirements:
 
 To install Gophimation, follow these steps:
 
-Linux and macOS:
+Install gophimation [HERE](https://github.com/Caixetadev/gophimation/releases)
+
+Linux:
 ```
-<comando_de_instalação>
+cd Download
+sudo chmod +x gophimation
+sudo mv gophimation /usr/bin
 ```
 
 ## ☕ Using Gophimation
