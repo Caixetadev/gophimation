@@ -5,7 +5,7 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/Caixetadev/gophimation?style=for-the-badge)
 ![GitHub language count](https://img.shields.io/github/languages/count/Caixetadev/gophimation?style=for-the-badge)
 ![GitHub forks](https://img.shields.io/github/forks/Caixetadev/gophimation?style=for-the-badge)
-![Bitbucket open issues](https://img.shields.io/bitbucket/issues/Caixetadev/gophimation?style=for-the-badge)
+![Bitbucket open issues](https://img.shields.io/github/issues/Caixetadev/gophimation?style=for-the-badge)
 ![Bitbucket open pull requests](https://img.shields.io/bitbucket/pr-raw/Caixetadev/gophimation?style=for-the-badge)
 
 https://user-images.githubusercontent.com/87894998/224532763-f82b90f2-06c5-4b44-8c96-c3eb2eab7244.mp4
