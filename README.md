@@ -5,66 +5,60 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/Caixetadev/gophimation?style=for-the-badge)
 ![GitHub language count](https://img.shields.io/github/languages/count/Caixetadev/gophimation?style=for-the-badge)
 ![GitHub forks](https://img.shields.io/github/forks/Caixetadev/gophimation?style=for-the-badge)
-![Bitbucket open issues](https://img.shields.io/bitbucket/issues/Caixetadev/gophimation?style=for-the-badge)
+![Bitbucket open issues](https://img.shields.io/github/issues/Caixetadev/gophimation?style=for-the-badge)
 ![Bitbucket open pull requests](https://img.shields.io/bitbucket/pr-raw/Caixetadev/gophimation?style=for-the-badge)
 
 https://user-images.githubusercontent.com/87894998/224532763-f82b90f2-06c5-4b44-8c96-c3eb2eab7244.mp4
 
-> Gophimation é uma ferramenta de linha de comando feita em Golang que permite assistir seus animes favoritos diretamente do terminal, sem a distração de anúncios e outras interrupções indesejadas.
+> Gophimation is a command-line tool built in Golang that allows you to watch your favorite anime directly from the terminal, without the distraction of ads and other unwanted interruptions.
 
-### Ajustes e melhorias
+### Adjustments and Improvements
 
-O projeto ainda está em desenvolvimento e as próximas atualizações serão voltadas nas seguintes tarefas:
+The project is still in development, and upcoming updates will focus on the following tasks:
+- [ ] Make mpv work on Windows
+- [ ] Add more player options
 
-- [ ] Fazer o mpv abrir no Windows
-- [ ] Colocar mais opções de players
+## 💻 Prerequisites
 
-## 💻 Pré-requisitos
+Before you begin, make sure you have met the following requirements:
+* mpv
 
-Antes de começar, verifique se você atendeu aos seguintes requisitos:
-<!---Estes são apenas requisitos de exemplo. Adicionar, duplicar ou remover conforme necessário--->
-* Você instalou a versão mais recente de `<linguagem / dependência / requeridos>`
-* Você tem uma máquina `<Windows / Linux / Mac>`. Indique qual sistema operacional é compatível / não compatível.
-* Você leu `<guia / link / documentação_relacionada_ao_projeto>`.
+## 🚀 Installing Gophimation
 
-## 🚀 Instalando Gophimation
+To install Gophimation, follow these steps:
 
-Para instalar o Gophimation, siga estas etapas:
+Install gophimation [HERE](https://github.com/Caixetadev/gophimation/releases)
 
-Linux e macOS:
+Linux:
 ```
-<comando_de_instalação>
-```
-
-Windows:
-<comando_de_instalação>
+cd Download
+sudo chmod +x gophimation
+sudo mv gophimation /usr/bin
 ```
 
-## ☕ Usando <nome_do_projeto>
+## ☕ Using Gophimation
 
-Para usar <nome_do_projeto>, siga estas etapas:
-
+To search for an anime:
 ```
-<exemplo_de_uso>
+gophimation animename
 ```
 
-Adicione comandos de execução e exemplos que você acha que os usuários acharão úteis. Fornece uma referência de opções para pontos de bônus!
+to search for a random anime:
+```
+gophimation random
+```
 
-## 🤝 Contribuidores
+to search for the most watched anime of the week:
+```
+gophimation
+```
 
-Agradecemos às seguintes pessoas que contribuíram para este projeto:
+## 😄 Be one of the contributors
 
-<a href="https://github.com/filipedeschamps/tabnews.com.br/graphs/contributors">
-  <img src="https://contributors-img.web.app/image?repo=filipedeschamps/tabnews.com.br&max=500" alt="Lista de contribuidores" width="100%"/>
-</a>
+Want to be part of this project? Click [HERE](CONTRIBUTING.md) and read how to contribute.
 
+## 📝 License
 
-## 😄 Seja um dos contribuidores<br>
+This project is under license. See the [LICENÇA](LICENSE)  file for more details
 
-Quer fazer parte desse projeto? Clique [AQUI](CONTRIBUTING.md) e leia como contribuir.
-
-## 📝 Licença
-
-Esse projeto está sob licença. Veja o arquivo [LICENÇA](LICENSE) para mais detalhes.
-
-[⬆ Voltar ao topo](#nome-do-projeto)<br>
+[⬆ Go to top](#nome-do-projeto)<br>
