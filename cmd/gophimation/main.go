@@ -53,12 +53,15 @@ func app() {
 		go utils.CleanCache(time.Second * 1)
 		animeMostWatched := scrapers.MostWatched()
 		currentEpisodeIndex, watchedEpisodes = fetchAnimeData(animeMostWatched)
+		searchResult = animeMostWatched
 	case len(os.Args) > 1:
 		animeSearch := scrapers.Search()
 		currentEpisodeIndex, watchedEpisodes = fetchAnimeData(animeSearch)
+		searchResult = animeSearch
 	default:
 		animeMostWatched := scrapers.MostWatched()
 		currentEpisodeIndex, watchedEpisodes = fetchAnimeData(animeMostWatched)
+		searchResult = animeMostWatched
 	}
 
 	utils.Clear()
@@ -92,7 +95,9 @@ func app() {
 		case "r":
 			getSelectedVideo(watchedEpisodes, currentEpisodeIndex)
 		case "s":
+			fmt.Println(searchResult)
 			nextEpisode, currentEpIndex, episodes := scrapers.SelectEpisode(searchResult)
+			fmt.Println(episodes)
 			getSelectedVideo(episodes, currentEpIndex)
 			if nextEpisode != nil {
 				go scrapers.SelectVideo(*nextEpisode)
