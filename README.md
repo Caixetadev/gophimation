@@ -31,7 +31,7 @@ Install gophimation [HERE](https://github.com/Caixetadev/gophimation/releases)
 
 Linux:
 ```
-cd Download
+cd Downloads
 sudo chmod +x gophimation
 sudo mv gophimation /usr/bin
 ```
