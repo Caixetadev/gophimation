@@ -15,7 +15,12 @@ import (
 
 func init() {
 	go utils.CleanCache(time.Hour * 3)
-	go presence.Presence("https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png", "Explorando Animes", "Encontre seu próximo anime favorito <3", "")
+	go presence.Presence(
+		"https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png",
+		"Explorando Animes",
+		"Encontre seu próximo anime favorito <3",
+		"",
+	)
 
 	rootDir := utils.GetCacheDir("user")
 

@@ -43,7 +43,10 @@ func setCollyCallbacksPlayer(c *colly.Collector, player *[]PlayerInfo, nameAnime
 		match := re.FindStringSubmatch(h.Text)
 
 		if len(match) > 1 {
-			*player = append(*player, PlayerInfo{Name: nameAnimeAndEpisode, Url: strings.ReplaceAll(match[1], "\\", "")})
+			*player = append(
+				*player,
+				PlayerInfo{Name: nameAnimeAndEpisode, Url: strings.ReplaceAll(match[1], "\\", "")},
+			)
 		}
 	})
 

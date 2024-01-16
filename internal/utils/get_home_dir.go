@@ -10,7 +10,6 @@ import (
 // GetCacheDir retrieves the cache directory. It expects a parameter 'folderName' that specifies the desired folder name.
 func GetCacheDir(folderName string) string {
 	usr, err := user.Current()
-
 	if err != nil {
 		panic(err)
 	}

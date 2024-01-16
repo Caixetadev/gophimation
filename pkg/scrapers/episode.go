@@ -47,7 +47,13 @@ func SelectEpisode(URL string) (*string, int, []entity.Anime) {
 	return &episodes[(selectedOption+1)-1].URL, selectedOption - 1, episodes
 }
 
-func setCollyCallbacksEpisodes(c *colly.Collector, nameAnime *string, episodes *[]entity.Anime, image *string, URL string) {
+func setCollyCallbacksEpisodes(
+	c *colly.Collector,
+	nameAnime *string,
+	episodes *[]entity.Anime,
+	image *string,
+	URL string,
+) {
 	c.OnHTML(".infos_left .anime-info", func(h *colly.HTMLElement) {
 		*nameAnime = h.ChildText("h2")
 
@@ -59,7 +65,13 @@ func setCollyCallbacksEpisodes(c *colly.Collector, nameAnime *string, episodes *
 	c.OnHTML("#episodesList .list-group-item-action", func(h *colly.HTMLElement) {
 		fmt.Printf("[%02d] - %v\n", h.Index+1, h.ChildText("a h3"))
 
-		*episodes = append(*episodes, entity.Anime{Name: h.ChildText("a h3"), URL: strings.TrimPrefix(h.ChildAttr("a", "href"), constants.URL_BASE)})
+		*episodes = append(
+			*episodes,
+			entity.Anime{
+				Name: h.ChildText("a h3"),
+				URL:  strings.TrimPrefix(h.ChildAttr("a", "href"), constants.URL_BASE),
+			},
+		)
 	})
 
 	c.OnHTML("main.container", func(h *colly.HTMLElement) {
@@ -68,5 +80,10 @@ func setCollyCallbacksEpisodes(c *colly.Collector, nameAnime *string, episodes *
 }
 
 func updatePresence(image string, nameAnime string, selectedOption int) {
-	go presence.Presence("https:"+image, nameAnime, fmt.Sprintf("Episódio %02d", selectedOption), "https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png")
+	go presence.Presence(
+		"https:"+image,
+		nameAnime,
+		fmt.Sprintf("Episódio %02d", selectedOption),
+		"https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png",
+	)
 }

@@ -40,7 +40,6 @@ func CreateFile(rootDir string, filename string) {
 	defer file.Close()
 
 	user, err := json.Marshal(data)
-
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -1,5 +1,7 @@
 package constants
 
-const FOLDER_NAME = "gophimation"
-const USER_SETTINGS_FILE = "/settings.json"
-const URL_BASE = "https://betteranime.net/"
+const (
+	FOLDER_NAME        = "gophimation"
+	USER_SETTINGS_FILE = "/settings.json"
+	URL_BASE           = "https://betteranime.net/"
+)
