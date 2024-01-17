@@ -29,7 +29,4 @@ func PlayVideo(videoUrl, nameEpisode string) {
 	if err := cmd.Run(); err != nil {
 		log.Fatalln(err)
 	}
-
-	// Set Discord user presence to show default presence
-	// presence.Presence("Caixeta", "https://www.stickersdevs.com.br/wp-content/uploads/2022/01/gopher-adesivo-sticker.png", "Explorando Animes", "Encontre seu próximo anime favorito <3", "")
 }
